@@ -6,7 +6,11 @@
 ##1、简介
 室内定位开发包是基于ArcGIS框架和GEOS几何计算开源库，为开发者提供了的室内地图显    示、路径规划、室内定位等相关GIS功能。**本开发包支持的Android版本为18或更高**
 ##2、准备工作
-######2.1. 新建android工程，将下载好的jar包和动态库(*.so)复制到项目的libs文件夹中,AndroidStudio需要在build.gradle中指定so库的位置信息,如下：
+###[demo[资源]下载](https://github.com/BrightBeacon/BrightIndoorSDK_Android)
+- 由于库文件过大，所以库文件都压缩在libs目录的libs.zip中，下载完成后解压直接使用。
+- 图片资源在drawable-hdpi中
+
+######2.1. 新建android工程，将下载jar包和动态库复制到项目的libs文件夹中,AndroidStudio需要在build.gradle中指定so库的位置信息,如下：
 	android {
 	    sourceSets {
 	        main {
@@ -15,8 +19,9 @@
 	    }
 	}
 ######2.2.复制地图数据到工程的assets文件下
+	- 地图数据在demo工程的app/src/main/assets文件夹下所有文件
 ######2.3.复制地图中用的到资源图片到res下的drawable-hdpi文件夹下
-
+	- 资源图片在demo工程的app/src/main/res/drawable-hdpi文件夹下所有文件
 ##3、基础地图展示
 #####3.1.新建actvity类，并加支持库
 	static {
@@ -28,7 +33,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent" />
 
-#####3.3.初始化mapView,并按步骤初始化地图[代码详见demo]
+#####3.3.初始化mapView,并按步骤初始化地图[[代码详见demo](https://github.com/BrightBeacon/BrightIndoorSDK_Android/blob/master/app/src/main/java/com/brtbeacon/indoor/ui/BaseMapActivity.java)]
     - 1.设置地图数据保存在SD卡的位置
     - 2.copy测试地图数据到SD卡
     - 3.获得城市数据、建筑数据
@@ -39,21 +44,21 @@
 	参数userId:开发者账号
 	参数license:地图使用授权
 	    MapView.init(TYBuilding building, String userID, String license)
-	[申请userId和license地址入口](http://map.brtbeacon.com/)
+[申请userId和license地址入口](http://map.brtbeacon.com/)
 #####3.4.完成以上步骤就可以正常显示地图了
 
 ##4、地图弹窗
 #####4.1.复制弹窗样式配置文件callout_style.xml到res文件夹下的xml文件夹
 	<resources>
 	    <calloutViewStyle
-	   	backgroundColor="#ffffff"//弹窗背景颜色
-	   	backgroundAlpha="255"    //弹窗背景透明度
-	   	frameColor="#66FFCC"     //弹窗边框颜色
-	   	cornerCurve="10"         //弹窗边框拐角度数
-	   	anchor="5" />  //弹窗锚 指的方向 【1：上，2:右上，3：右，4：右下, ....】
+		   	backgroundColor="#ffffff"//弹窗背景颜色
+		   	backgroundAlpha="255"    //弹窗背景透明度
+		   	frameColor="#66FFCC"     //弹窗边框颜色
+		   	cornerCurve="10"         //弹窗边框拐角度数
+		   	anchor="5" />  //弹窗锚 指的方向 【1：上，2:右上，3：右，4：右下, ....】
 	</resources>
 
-#####4.2.Activity实现TYMapView.TYMapViewListener接口 代码详见demo
+#####4.2.Activity实现TYMapView.TYMapViewListener接口 [[代码详见demo](https://github.com/BrightBeacon/BrightIndoorSDK_Android/blob/master/app/src/main/java/com/brtbeacon/indoor/ui/PopviewActivity.java)]
 
 	@Override
 	public void onClickAtPoint(TYMapView tyMapView, Point point) {
@@ -140,7 +145,7 @@
 	mapView.showRouteEndSymbolOnCurrentFloor(pt2);//显示终点图标在当前楼层地图上
 	popview.hide();
 
-#####5.3.实现接口TYOfflineRouteManager.TYOfflineRouteManagerListener【[代码详见demo]()】
+#####5.3.实现接口TYOfflineRouteManager.TYOfflineRouteManagerListener[[代码详见demo](https://github.com/BrightBeacon/BrightIndoorSDK_Android/blob/master/app/src/main/java/com/brtbeacon/indoor/ui/PoiActivity.java)]
 	@Override
 	public void didSolveRouteWithResult(TYOfflineRouteManager tyOfflineRouteManager, TYRouteResult tyRouteResult) {
 	        //设置线路
@@ -154,17 +159,15 @@
 
 ##6、室内定位
 
-实现定位导航之前，请先[下载配置端](http://fir.im/cfg)，并配置好导航的beacon信息
+实现定位导航之前，请先配置好导航的beacon信息,[下载配置端](http://fir.im/cfg)
 
 #####6.1. 添加定位服务
- <service android:name="com.ty.locationengine.ibeacon.BeaconService" />
+	<service android:name="com.ty.locationengine.ibeacon.BeaconService" />
 #####2. 添加蓝牙权限权限
 	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 #####6.3. 加载定位支持库
-```
-System.loadLibrary("TYLocationEngine");
-```
+	System.loadLibrary("TYLocationEngine");
 #####6.4. 初始化定位引擎
 	String uuid = "FDA50693-A4E2-4FB1-AFCF-C6EB07647825", major = "10046";
 	// 初始化定位引擎
@@ -177,34 +180,39 @@ System.loadLibrary("TYLocationEngine");
 	    locationManager.setBeaconRegion(new BeaconRegion("TuYa", null, null, null));
 	}
 
-#####6.5. 实现接口TYLocationManager.TYLocationManagerListener接口[代码详见demo]
+#####6.5. 实现接口TYLocationManager.TYLocationManagerListener接口[[代码详见demo](https://github.com/BrightBeacon/BrightIndoorSDK_Android/blob/master/app/src/main/java/com/brtbeacon/indoor/ui/NavActivity.java)]
 	@Override
 	public void didRangedBeacons(TYLocationManager tyLocationManager, List<TYBeacon> list) {
-		     //Beacon扫描结果事件回调，返回符合扫描参数的所有Beacon
+		//Beacon扫描结果事件回调，返回符合扫描参数的所有Beacon
 	}
+
 	@Override
 	public void didRangedLocationBeacons(TYLocationManager tyLocationManager, List<TYPublicBeacon> list) {
-		     //定位Beacon扫描结果事件回调，返回符合扫描参数的定位Beacon，定位Beacon包含坐标信息
+		//定位Beacon扫描结果事件回调，返回符合扫描参数的定位Beacon，定位Beacon包含坐标信息
 	}
+
 	@Override
 	public void didUpdateLocation(TYLocationManager tyLocationManager, TYLocalPoint tyLocalPoint) {
-		     //位置更新事件回调，位置更新并返回新的位置结果
-	if (mapView.getCurrentMapInfo().getFloorNumber() != tyLocalPoint.getFloor()) {
-	    TYMapInfo targetMapInfo = TYMapInfo.searchMapInfoFromArray(
-	            allMapInfos, tyLocalPoint.getFloor());
-	    mapView.setFloor(targetMapInfo);
-	}
-	// 在地图当前楼层上显示定位结果
-	mapView.showLocation(tyLocalPoint);
+		//位置更新事件回调，位置更新并返回新的位置结果
+		if (mapView.getCurrentMapInfo().getFloorNumber() != tyLocalPoint.getFloor()) {
+		    TYMapInfo targetMapInfo = TYMapInfo.searchMapInfoFromArray(allMapInfos, tyLocalPoint.getFloor());
+		    mapView.setFloor(targetMapInfo);
+		}
+	
+		// 在地图当前楼层上显示定位结果
+		mapView.showLocation(tyLocalPoint);
 	
 	}
+
 	@Override
 	public void didFailUpdateLocation(TYLocationManager tyLocationManager) {
 	    //更新位置错误 
 	}
+
 	@Override
 	public void didUpdateDeviceHeading(TYLocationManager tyLocationManager, double v) {
-		    //设备方向改变事件回调}
+		//设备方向改变事件回调
+	}
 ##7.相关资源
 - [开发者社区](http://bbs.brtbeacon.com/web/home/index)
 - [智石官网](http://www.brtbeacon.com/main/index.shtml)
