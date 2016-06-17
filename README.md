@@ -1,4 +1,4 @@
-#图呀地图api集成指南
+#室内定位开发包-[智石科技](http://www.brtbeacon.com/main/index.shtml)
 
 ----------
 
