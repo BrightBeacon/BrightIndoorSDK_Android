@@ -1,0 +1,216 @@
+{
+    "RenderingScheme" : {
+        "IconSymbol" : [
+                        {
+                        "colorID" : 25118,
+                        "icon" : "icon_toilet"
+                        },
+                        {
+                        "colorID" : 160013,
+                        "icon" : "icon_womens_room"
+                        },
+                        {
+                        "colorID" : 25135,
+                        "icon" : "icon_staircase"
+                        },
+                        {
+                        "colorID" : 25020,
+                        "icon" : "icon_atm"
+                        },
+                        {
+                        "colorID" : 150013,
+                        "icon" : "icon_lift"
+                        },
+                        {
+                        "colorID" : 25031,
+                        "icon" : "icon_exchange_money"
+                        },
+                        {
+                        "colorID" : 1,
+                        "icon" : "icon_exit"
+                        },
+                        {
+                        "colorID" : 25000,
+                        "icon" : "icon_exit"
+                        },
+                        {
+                        "colorID" : 25140,
+                        "icon" : "icon_exit"
+                        },
+                        {
+                        "colorID" : 150001,
+                        "icon" : "icon_exit"
+                        },
+                        {
+                        "colorID" : 160012,
+                        "icon" : "icon_mens_room"
+                        },
+                        {
+                        "colorID" : 25025,
+                        "icon" : "icon_childroom"
+                        },
+                        {
+                        "colorID" : 25015,
+                        "icon" : "icon_sick"
+                        },
+                        {
+                        "colorID" : 25065,
+                        "icon" : "icon_consultant"
+                        },
+                        {
+                        "colorID" : 150014,
+                        "icon" : "icon_staircase"
+                        },
+                        {
+                        "colorID" : 150012,
+                        "icon" : "icon_stair"
+                        },
+                        {
+                        "colorID" : 2,
+                        "icon" : "icon_exit"
+                        }
+                        ],
+        "DefaultSymbol" : {
+            "DefaultHighlightFillSymbol" : {
+                "colorID" : 9998,
+                "outlineColor" : "#FFFFFFFF",
+                "fillColor" : "#FF00FFFF",
+                "lineWidth" : 1
+            },
+            "DefaultFillSymbol" : {
+                "colorID" : 9999,
+                "outlineColor" : "#FFFFFFFF",
+                "fillColor" : "#FFCCCCCC",
+                "lineWidth" : 1
+            }
+        },
+        "FillSymbol" : [
+                        {
+                        "colorID" : 500,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FFE6E7E9",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 8,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FF6A5ACD",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 5,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FFD3FFBE",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 158,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#3300AABB",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 300,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FFE6E7E9",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 2,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FFFCDDC1",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 25001,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FFFFFFFF",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 12001,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FF7AB6F5",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 1002,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FFB4E164",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 7,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FFFF1493",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 3000,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FF7AB6F5",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 100,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FFFFFFFF",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 600,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FF9C9C9C",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 4,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FFE4A3C1",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 1,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FFB4E164",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 25000,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FFFFFFFF",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 9,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FFFFD700",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 6,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FFBFD2EA",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 200,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FFCCCCCC",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 3,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FFBFE7E7",
+                        "lineWidth" : 1
+                        },
+                        {
+                        "colorID" : 700,
+                        "outlineColor" : "#FFFFFFFF",
+                        "fillColor" : "#FF9C9C9C",
+                        "lineWidth" : 1
+                        }
+                        ]
+    }
+}
