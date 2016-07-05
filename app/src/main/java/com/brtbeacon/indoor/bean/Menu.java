@@ -3,6 +3,7 @@ package com.brtbeacon.indoor.bean;
 /**
  * 主界面显示的菜单数据
  * Created by BrightBeacon on 2016/5/31 0031.
+ * 又是一个测试信息
  */
 public class Menu {
 
