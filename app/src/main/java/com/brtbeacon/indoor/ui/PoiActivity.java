@@ -105,7 +105,7 @@ public class PoiActivity extends AppCompatActivity implements TYMapView.TYMapVie
         currentMapInfo = allMapInfos.get(currentFloor);
 
         //4.初始化地图并显示
-        mapView.init(currentBuilding, "ty4e13f85911a44a75", "26db2af1g0772n53`dd9`666101ec55a");
+        mapView.init(currentBuilding, "ty4e13f85911a44a75", "26db2af1ZzA3NzJuNTM#YGRkOWA2NjY#101ec55a");
         mapView.setFloor(currentMapInfo);
 
         popview = mapView.getCallout();//获取弹出view的容器
