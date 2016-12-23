@@ -1,13 +1,12 @@
-#室内定位开发包-[智石科技](http://www.brtbeacon.com/main/index.shtml)
+#室内定位开发包-[智石科技](http://www.brtbeacon.com)
 
 ----------
-
+###详细文档请移步->[帮助与文档](http://help.brtbeacon.com)
 
 ##1、简介
-室内定位开发包是基于ArcGIS框架和GEOS几何计算开源库，为开发者提供了的室内地图显    示、路径规划、室内定位等相关GIS功能。**本开发包支持的Android版本为18或更高**
+室内定位开发包是基于ArcGIS框架和GEOS几何计算开源库，为开发者提供了的室内地图显示、路径规划、室内定位等相关GIS功能。**本开发包支持的Android版本为18或更高**
 ##2、准备工作
 ###[demo[资源]下载](https://github.com/BrightBeacon/BrightIndoorSDK_Android)
-- 由于库文件过大，所以库文件都压缩在libs目录的libs.zip中，下载完成后解压直接使用。
 - 图片资源在drawable-hdpi中
 
 ######2.1. 新建android工程，将下载jar包和动态库复制到项目的libs文件夹中,AndroidStudio需要在build.gradle中指定so库的位置信息,如下：
@@ -23,9 +22,10 @@
 ######2.3.复制地图中用的到资源图片到res下的drawable-hdpi文件夹下
 	- 资源图片在demo工程的app/src/main/res/drawable-hdpi文件夹下所有文件
 ##3、基础地图展示
-#####3.1.新建actvity类，并加支持库
+#####3.1.新建actvity类，并按需添加地图、定位支持库
 	static {
 	        System.loadLibrary("TYMapSDK");
+	        System.loadLibrary("TYLocationEngine");
 	}
 #####3.2. 在Activity的布局文件中添加地图控件
 	<com.ty.mapsdk.TYMapView
@@ -35,16 +35,18 @@
 
 #####3.3.初始化mapView,并按步骤初始化地图[[代码详见demo](https://github.com/BrightBeacon/BrightIndoorSDK_Android/blob/master/app/src/main/java/com/brtbeacon/indoor/ui/BaseMapActivity.java)]
     - 1.设置地图数据保存在SD卡的位置
-    - 2.copy测试地图数据到SD卡
+        TYMapEnvironment.initMapEnvironment();
+		TYMapEnvironment.setRootDirectoryForMapFiles(dir);
+    - 2.下载、或copy地图数据到SD卡
     - 3.获得城市数据、建筑数据
     - 4.初始化地图并显示
-    - //显示地图需要用到城市数据、建筑信息，并传人授权OpenId和License以验证地图使用权限
+    - //显示地图需要用到城市数据、建筑信息，并传人授权appKey和License以验证地图使用权限
 
-	参数building:建筑信息
-	参数userId:开发者账号
-	参数license:地图使用授权
+	参数BUILDING_ID:建筑标识
+	参数APP_KEY:应用appkey
+	参数LICENSE:地图使用授权
 	    MapView.init(TYBuilding building, String userID, String license)
-[申请userId和license地址入口](http://map.brtbeacon.com/)
+[申请appkey和license地址入口](http://developer.brtbeacon.com/)
 #####3.4.完成以上步骤就可以正常显示地图了
 
 ##4、地图弹窗
@@ -159,7 +161,7 @@
 
 ##6、室内定位
 
-实现定位导航之前，请先配置好导航的beacon信息,[下载配置端](http://fir.im/cfg)
+实现定位导航之前，请先配置好导航的beacon信息,[下载配置端](http://brtbeacon.com)
 
 #####6.1. 添加定位服务
 	<service android:name="com.ty.locationengine.ibeacon.BeaconService" />
@@ -169,6 +171,10 @@
 #####6.3. 加载定位支持库
 	System.loadLibrary("TYLocationEngine");
 #####6.4. 初始化定位引擎
+
+```
+   //定位数据路径
+   TYBLEEnvironment.setRootDirectoryForFiles(dir);
 	String uuid = "FDA50693-A4E2-4FB1-AFCF-C6EB07647825", major = "10046";
 	// 初始化定位引擎
 	locationManager = new TYLocationManager(this, currentBuilding);
@@ -179,7 +185,7 @@
 	} else {
 	    locationManager.setBeaconRegion(new BeaconRegion("TuYa", null, null, null));
 	}
-
+```
 #####6.5. 实现接口TYLocationManager.TYLocationManagerListener接口[[代码详见demo](https://github.com/BrightBeacon/BrightIndoorSDK_Android/blob/master/app/src/main/java/com/brtbeacon/indoor/ui/NavActivity.java)]
 	@Override
 	public void didRangedBeacons(TYLocationManager tyLocationManager, List<TYBeacon> list) {
@@ -213,6 +219,66 @@
 	public void didUpdateDeviceHeading(TYLocationManager tyLocationManager, double v) {
 		//设备方向改变事件回调
 	}
-##7.相关资源
-- [开发者社区](http://bbs.brtbeacon.com/web/home/index)
-- [智石官网](http://www.brtbeacon.com/main/index.shtml)
+##7、示例工程演示定位（不支持模拟器）
+
+#####配置示例工程演示定位
+使用与地图数据配套的iBeacon设备部署方案，才可以实现室内地图定位。示例地图，需要准备5个iBeacon设备；配置参数列表如下：
+
+<table>
+<thead>
+<tr>
+<th>No.</th>
+<th>UUID </th>
+<th> Major </th>
+<th> Minor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>区域1</td>
+<td rowspan＝'2'> FDA50693-A4E2-4FB1-AFCF-C6EB07647825 </td>
+<td> 10046  </td>
+<td> 11048</td>
+</tr>
+<tr>
+<td>区域2</td>
+<td> FDA50693-A4E2-4FB1-AFCF-C6EB07647825 </td>
+<td> 10046  </td>
+<td> 11049</td>
+</tr>
+<tr>
+<td>区域3</td>
+<td> FDA50693-A4E2-4FB1-AFCF-C6EB07647825 </td>
+<td> 10046  </td>
+<td> 11050</td>
+</tr>
+<tr>
+<td>区域4</td>
+<td> FDA50693-A4E2-4FB1-AFCF-C6EB07647825 </td>
+<td> 10046  </td>
+<td> 11053</td>
+</tr>
+<tr>
+<td>区域5</td>
+<td> FDA50693-A4E2-4FB1-AFCF-C6EB07647825 </td>
+<td> 10046  </td>
+<td> 11055</td>
+</tr>
+</tbody>
+</table>
+
+##8、使用你的地图
+***
+#####获取你的地图参数
+①前往[开发者中心http://developer.brtbeacon.com](http://developer.brtbeacon.com)并登录
+
+②首次注册用户需创建【应用AppKey】，即可申请地图
+
+②登录查看你的【建筑列表】获取AppKey、License、UUID等参数，填入示例工程即可
+
+
+* [帮助文档](http://help.brtbeacon.com)
+* [社区提问](http://bbs.brtbeacon.com)
+* [智石官网](http://www.brtbeacon.com)
+
+#####商务合作、地图绘制咨询400-099-9023
