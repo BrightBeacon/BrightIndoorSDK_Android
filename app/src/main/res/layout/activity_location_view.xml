@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <include layout="@layout/activity_callout_view"/>
+    <ImageView
+       	 android:layout_width="40dp"
+       	 android:layout_height="40dp"
+         android:layout_alignStart="@+id/show_location"	
+		 android:layout_alignTop="@id/show_location"
+         android:src="@drawable/location"
+         android:contentDescription="@string/app_name"
+         />
+    <TextView
+        android:id="@+id/show_location"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="20dp"
+        android:contentDescription="@string/app_name"
+        />
+</RelativeLayout>

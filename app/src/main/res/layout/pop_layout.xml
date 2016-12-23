@@ -1,28 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:padding="8dp"
+              android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <TextView
+            android:id="@+id/poi_title_txt"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="电梯"
+            android:textColor="@android:color/black"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold"
+            android:layout_margin="5dp"/>
 
-            <TextView
-                android:id="@+id/poi_title_txt"
-                android:layout_width="match_parent"
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+        <TextView
+                android:id="@+id/btn_poi_start"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="-"
-                android:padding="8dp"
-                />
-            <TextView
-                android:id="@+id/poi_content_txt"
-                android:layout_width="match_parent"
+                android:singleLine="true"
+                android:text="起点"
+                android:paddingLeft="2dp"
+                android:gravity="center"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@android:color/white"
+                android:background="@drawable/qidian"/>
+
+        <TextView
+                android:id="@+id/btn_poi_end"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="-"
-                android:padding="8dp"
-                />
-        </LinearLayout>
+                android:singleLine="true"
+                android:paddingLeft="2dp"
+                android:background="@drawable/zhongdian"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:text="终点"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@android:color/white"/>
+
+    </LinearLayout>
 </LinearLayout>

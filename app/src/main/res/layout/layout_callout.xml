@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFFFF" >
+
+    <TextView
+        android:id="@+id/callout_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textColor="#FF000000" />
+
+    <TextView
+        android:id="@+id/callout_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/callout_title"
+        android:layout_margin="5dp"
+        android:gravity="start"
+        android:textColor="#FF000000" />
+
+    <LinearLayout
+        android:id="@+id/bottom_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"  
+        android:layout_below="@+id/callout_detail"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/callout_cancel"
+            android:layout_width="80dp"
+            android:layout_height="31dp"
+            android:layout_margin="5dp"
+            android:background="#FFFF0000"
+            android:gravity="center"
+            android:text="@string/cancel"
+            android:textColor="#FF000000" />
+
+        <TextView
+            android:id="@+id/callout_done"
+            android:layout_width="80dp"
+            android:layout_height="31dp"
+            android:layout_margin="5dp"
+            android:background="#FF00FF00"
+            android:gravity="center"
+            android:text="@string/done"
+            android:textColor="#FF000000" />
+    </LinearLayout>
+
+</RelativeLayout>

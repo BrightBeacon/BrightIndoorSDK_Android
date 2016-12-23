@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/thomasho/Documents/SDK/BrightIndoorSDK_Android/sweetAlert/build/intermediates/res/merged/androidTest/debug/drawable-xhdpi-v4/ic_launcher.png",
+        "source": "/Users/thomasho/Documents/SDK/BrightIndoorSDK_Android/sweetAlert/build/intermediates/bundles/debug/res/drawable-xhdpi-v4/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/thomasho/Documents/SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/res/merged/androidTest/debug/drawable-xhdpi-v4/ic_launcher.png",
+        "source": "/Users/thomasho/Documents/SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/bundles/debug/res/drawable-xhdpi-v4/ic_launcher.png"
+    }
+]
