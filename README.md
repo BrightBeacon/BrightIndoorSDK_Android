@@ -2,6 +2,7 @@
 
 ----------
 ###详细文档请移步->[帮助与文档](http://help.brtbeacon.com)
+###Eclipse版Demo->[室内开发包Eclipse](https://github.com/BrightBeacon/BrightIndoorSDK_Eclipse)
 
 ##1、简介
 室内定位开发包是基于ArcGIS框架和GEOS几何计算开源库，为开发者提供了的室内地图显示、路径规划、室内定位等相关GIS功能。**本开发包支持的Android版本为18或更高**
