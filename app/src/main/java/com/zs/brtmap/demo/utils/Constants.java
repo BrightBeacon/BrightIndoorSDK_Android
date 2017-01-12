@@ -12,7 +12,7 @@ public class Constants {
 	public static final String BUILDING_ID = "ZS020006";
 	public static final String APP_KEY = "efef3dbde9dd416bb24b213ed546584f";
 	public static final String LICENSE = "608d7b30DwYwMDM2MT8brtd_ZmY2YWYyNjQbrtd_c1de8012";
-	
+
 	//定位初始化参数查看：http://developer.brtbeacon.com/positive/getRegionList
 	 public static final String UUID = "FDA50693-A4E2-4FB1-AFCF-C6EB07647825";
 	 public static final int MAJOR = 10046;

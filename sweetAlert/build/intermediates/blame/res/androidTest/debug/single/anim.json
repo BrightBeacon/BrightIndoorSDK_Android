@@ -1,26 +1,26 @@
 [
     {
-        "merged": "/Users/thomasho/Documents/SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/res/merged/androidTest/debug/anim/error_x_in.xml",
-        "source": "/Users/thomasho/Documents/SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/bundles/debug/res/anim/error_x_in.xml"
+        "merged": "/Users/thomasho/Documents/projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/res/merged/androidTest/debug/anim/error_frame_in.xml",
+        "source": "/Users/thomasho/Documents/projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/bundles/debug/res/anim/error_frame_in.xml"
     },
     {
-        "merged": "/Users/thomasho/Documents/SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/res/merged/androidTest/debug/anim/error_frame_in.xml",
-        "source": "/Users/thomasho/Documents/SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/bundles/debug/res/anim/error_frame_in.xml"
+        "merged": "/Users/thomasho/Documents/projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/res/merged/androidTest/debug/anim/modal_out.xml",
+        "source": "/Users/thomasho/Documents/projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/bundles/debug/res/anim/modal_out.xml"
     },
     {
-        "merged": "/Users/thomasho/Documents/SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/res/merged/androidTest/debug/anim/modal_in.xml",
-        "source": "/Users/thomasho/Documents/SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/bundles/debug/res/anim/modal_in.xml"
+        "merged": "/Users/thomasho/Documents/projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/res/merged/androidTest/debug/anim/error_x_in.xml",
+        "source": "/Users/thomasho/Documents/projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/bundles/debug/res/anim/error_x_in.xml"
     },
     {
-        "merged": "/Users/thomasho/Documents/SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/res/merged/androidTest/debug/anim/success_mask_layout.xml",
-        "source": "/Users/thomasho/Documents/SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/bundles/debug/res/anim/success_mask_layout.xml"
+        "merged": "/Users/thomasho/Documents/projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/res/merged/androidTest/debug/anim/success_bow_roate.xml",
+        "source": "/Users/thomasho/Documents/projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/bundles/debug/res/anim/success_bow_roate.xml"
     },
     {
-        "merged": "/Users/thomasho/Documents/SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/res/merged/androidTest/debug/anim/modal_out.xml",
-        "source": "/Users/thomasho/Documents/SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/bundles/debug/res/anim/modal_out.xml"
+        "merged": "/Users/thomasho/Documents/projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/res/merged/androidTest/debug/anim/success_mask_layout.xml",
+        "source": "/Users/thomasho/Documents/projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/bundles/debug/res/anim/success_mask_layout.xml"
     },
     {
-        "merged": "/Users/thomasho/Documents/SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/res/merged/androidTest/debug/anim/success_bow_roate.xml",
-        "source": "/Users/thomasho/Documents/SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/bundles/debug/res/anim/success_bow_roate.xml"
+        "merged": "/Users/thomasho/Documents/projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/res/merged/androidTest/debug/anim/modal_in.xml",
+        "source": "/Users/thomasho/Documents/projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/sweetAlert/build/intermediates/bundles/debug/res/anim/modal_in.xml"
     }
 ]

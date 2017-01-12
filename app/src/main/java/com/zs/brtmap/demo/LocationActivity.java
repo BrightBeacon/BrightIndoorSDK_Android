@@ -6,6 +6,7 @@ import java.util.List;
 import org.json.JSONObject;
 import org.xutils.common.Callback.ProgressCallback;
 
+import com.esri.core.geometry.Point;
 import com.ty.locationengine.ble.TYBLEEnvironment;
 import com.ty.locationengine.ble.TYBeacon;
 import com.ty.locationengine.ble.TYLocationManager;
@@ -14,6 +15,7 @@ import com.ty.locationengine.ble.TYPublicBeacon;
 import com.ty.locationengine.ibeacon.BeaconRegion;
 import com.ty.mapdata.TYLocalPoint;
 import com.ty.mapsdk.TYMapEnvironment;
+import com.ty.mapsdk.TYMapView;
 import com.ty.mapsdk.TYPictureMarkerSymbol;
 import com.zs.brtmap.demo.http.HttpHandler;
 import com.zs.brtmap.demo.utils.Constants;
@@ -146,9 +148,9 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
 		//  与[TYLocationManager:didUpdateImmediationLocation:]方法相近，此方法回调结果融合计步器信息，稳定性较好，适合用于步行场景下。
 		Log.i(TAG, newLocalPoint.getX()+" "+newLocalPoint.getY());
 		mapView.showLocation(newLocalPoint);
+		//mapView.showRemainingRouteResultOnCurrentFloor(newLocalPoint);
 	}
-	
-	
+
 	private void updateBeacon() {
 		HttpHandler.updateBeacon(new ProgressCallback<String>() {
 			@Override
