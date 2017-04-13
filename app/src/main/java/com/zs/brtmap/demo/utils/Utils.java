@@ -5,17 +5,14 @@ import java.util.Set;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 import android.widget.Toast;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class Utils {
 	private static SharedPreferences sp;
-	private static final String SHARD_FILE_NAME = "WMD";
-	
-	private static SweetAlertDialog pDialog;
+	private static final String SHARD_FILE_NAME = "TYData";
+
 
 	public static void rotationArrow(ImageView view, float startDegress, float endDegress) {
 		ObjectAnimator rotationAnim = ObjectAnimator.ofFloat(view, "rotation", startDegress, endDegress);
@@ -31,20 +28,6 @@ public class Utils {
 
 	public static void showToast(Context context, String msg) {
 		Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-	}
-
-	public static void showProgressDialog(Context context, String msg, boolean isCancel) {
-		pDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
-		pDialog.getProgressHelper().setBarColor(Color.BLUE);
-		pDialog.setTitleText(msg);
-		pDialog.setCancelable(isCancel);
-		pDialog.show();
-	}
-
-	public static void closeProgressDialog() {
-		if (pDialog != null && pDialog.isShowing()) {
-			pDialog.dismiss();
-		}
 	}
 	
 	public static <E> void saveValue(Context context, String key, E value) {

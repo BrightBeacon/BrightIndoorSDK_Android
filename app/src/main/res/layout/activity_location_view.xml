@@ -8,7 +8,7 @@
        	 android:layout_height="40dp"
          android:layout_alignStart="@+id/show_location"	
 		 android:layout_alignTop="@id/show_location"
-         android:src="@drawable/location"
+         android:src="@drawable/btn_locate"
          android:contentDescription="@string/app_name"
          />
     <TextView

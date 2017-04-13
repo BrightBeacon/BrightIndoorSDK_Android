@@ -52,16 +52,16 @@ public class RouteActivity extends BaseMapViewActivity implements TYOfflineRoute
 	}
 
 	@Override
-	public void mapViewDidLoad() {
-		// TODO Auto-generated method stub
-		super.mapViewDidLoad();
-		initSymbols();
+	public void mapViewDidLoad(final TYMapView mapView, Error error) {
+		if (error != null) return;
+
+		super.mapViewDidLoad(mapView,error);
+//		initSymbols();
 		// 建筑参数初始化完成
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				routeManager = new TYOfflineRouteManager(currentBuilding, allMapInfo);
-				routeManager.addRouteManagerListener(RouteActivity.this);
+				mapView.routeManager().addRouteManagerListener(RouteActivity.this);
 				isRouteManagerReady = true;
 			}
 		}).start();
@@ -94,8 +94,13 @@ public class RouteActivity extends BaseMapViewActivity implements TYOfflineRoute
 
 
 		if (isRouting){
-			Utils.showToast(RouteActivity.this, "已经规划路线，点击模拟定位导航效果");
 			TYLocalPoint localPoint = new TYLocalPoint(mappoint.getX(),mappoint.getY(),mapView.getCurrentMapInfo().getFloorNumber());
+			if(routeResult.isDeviatingFromRoute(localPoint,2)){
+				Utils.showToast(RouteActivity.this, "模拟2米偏航，重新规划路线");
+				setStartPoint(mappoint);
+			}
+
+			Utils.showToast(RouteActivity.this, "已经规划路线，点击模拟定位导航效果");
 			mapView.showLocation(localPoint);
 			mapView.showRemainingRouteResultOnCurrentFloor(localPoint);
 			mapView.showPassedAndRemainingRouteResultOnCurrentFloor(localPoint);
@@ -111,6 +116,7 @@ public class RouteActivity extends BaseMapViewActivity implements TYOfflineRoute
 		mapCallout.setMaxWidth(Utils.dip2px(this,300));
 		mapCallout.setMaxHeight(Utils.dip2px(this,300));
 		mapCallout.setContent(loadCalloutView(title, mappoint));
+		mapCallout.setStyle(R.xml.callout_style);
 		mapCallout.show(mappoint);
 	}
 
@@ -147,7 +153,6 @@ public class RouteActivity extends BaseMapViewActivity implements TYOfflineRoute
 		if (currentPoint == null) {
 			return;
 		}
-
 		startPoint = new TYLocalPoint(currentPoint.getX(), currentPoint.getY(),
 				mapView.getCurrentMapInfo().getFloorNumber());
 		mapView.showRouteStartSymbolOnCurrentFloor(startPoint);
@@ -158,7 +163,6 @@ public class RouteActivity extends BaseMapViewActivity implements TYOfflineRoute
 		if (currentPoint == null) {
 			return;
 		}
-
 		endPoint = new TYLocalPoint(currentPoint.getX(), currentPoint.getY(),
 				mapView.getCurrentMapInfo().getFloorNumber());
 		mapView.showRouteEndSymbolOnCurrentFloor(endPoint);
@@ -177,7 +181,7 @@ public class RouteActivity extends BaseMapViewActivity implements TYOfflineRoute
 
 		mapView.resetRouteLayer();
 
-		routeManager.requestRoute(startPoint, endPoint);
+		mapView.routeManager().requestRoute(startPoint, endPoint);
 	}
 
 	// 路径规划回调

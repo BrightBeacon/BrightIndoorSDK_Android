@@ -7,9 +7,10 @@ import com.esri.core.geometry.GeometryEngine;
 import com.esri.core.geometry.Point;
 import com.esri.core.geometry.Polygon;
 import com.ty.mapsdk.TYMapEnvironment;
-import com.ty.mapsdk.TYMapInfo;
 import com.ty.mapsdk.TYMapView;
+import com.ty.mapsdk.TYOfflineRouteManager;
 import com.ty.mapsdk.TYPoi;
+import com.ty.mapsdk.TYRouteResult;
 import com.zs.brtmap.demo.utils.Utils;
 
 import android.os.Bundle;
@@ -84,7 +85,6 @@ public class CalloutActivity extends BaseMapViewActivity {
 		Log.i(TAG, "onPoiSelected: " + poiList.size());
 		Log.i(TAG, "" + poiList);
 
-		mapCallout.setStyle(R.xml.callout_style);
 		if (mapCallout != null && mapCallout.isShowing()) {
 			mapCallout.hide();
 		}
@@ -105,8 +105,9 @@ public class CalloutActivity extends BaseMapViewActivity {
 			String title = poi.getName();
 			String detail = poi.getPoiID();
 
-			mapCallout.setMaxWidth(600);
-			mapCallout.setMaxHeight(600);
+//			mapCallout.setMaxWidth(Utils.dip2px(this, 300));
+//			mapCallout.setMaxHeight(Utils.dip2px(this, 300));
+			mapCallout.setStyle(R.xml.callout_style);
 			mapCallout.setContent(loadCalloutView(title, detail));
 			mapCallout.show(location);
 		}
@@ -114,6 +115,6 @@ public class CalloutActivity extends BaseMapViewActivity {
 
 	@Override
 	public void mapViewDidZoomed(TYMapView mapView) {
-		 Log.i(TAG, "mapViewDidZoomed");
+		Log.i(TAG, "mapViewDidZoomed");
 	}
 }

@@ -11,10 +11,21 @@ import com.esri.core.symbol.SimpleLineSymbol;
 import com.esri.core.symbol.SimpleMarkerSymbol;
 import com.esri.core.symbol.TextSymbol;
 import com.ty.mapsdk.TYMapView;
+import com.ty.mapsdk.TYOfflineRouteManager;
 import com.ty.mapsdk.TYPictureMarkerSymbol;
+import com.ty.mapsdk.TYRouteResult;
 import com.zs.brtmap.demo.utils.Utils;
 
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Align;
+import android.graphics.PaintFlagsDrawFilter;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+
 import android.os.Bundle;
 import android.util.Log;
 
@@ -49,12 +60,18 @@ public class LayerActivity extends BaseMapViewActivity {
 		mapView.addLayer(graphicsLayer);
 		graphicsLayer.addGraphic(new Graphic(mappoint, pms));
 
+		//显示中文需指定字体，注意确保字体存在
 		TextSymbol txtSymbol = new TextSymbol("DroidSansFallback.ttf", "旋转地图试试", Color.RED);
 		txtSymbol.setSize(15);
 		// 方向自适应
 		GraphicsLayer dynamicLayer = new GraphicsLayer(GraphicsLayer.RenderingMode.DYNAMIC);
 		mapView.addLayer(dynamicLayer);
 		dynamicLayer.addGraphic(new Graphic(mappoint, txtSymbol));
+
+		//或将中文转换图片显示
+		TYPictureMarkerSymbol txtPicSymbol = new TYPictureMarkerSymbol(createMapBitMap("显示中文"));
+		txtPicSymbol.setOffsetY(20);
+		dynamicLayer.addGraphic(new Graphic(mappoint, txtPicSymbol));
 	}
 
 	private void testGeometry(Point startPoint,Point nextPoint) {
@@ -65,11 +82,11 @@ public class LayerActivity extends BaseMapViewActivity {
 		SimpleFillSymbol fillSymbol = new SimpleFillSymbol(Color.RED);
 		fillSymbol.setOutline(lineSymbol);
 		fillSymbol.setAlpha(90);
-		
-		
+
+
 		GraphicsLayer layer = new GraphicsLayer();
 		mapView.addLayer(layer);
-		
+
 		//线段
 		Polyline polyline = new Polyline();
 		polyline.startPath(startPoint);
@@ -82,7 +99,7 @@ public class LayerActivity extends BaseMapViewActivity {
 		polygon.lineTo(nextPoint);
 		polygon.lineTo((startPoint.getX()+nextPoint.getX())/2,(startPoint.getY()+nextPoint.getY())/2);
 		layer.addGraphic(new Graphic(polygon, fillSymbol));
-		
+
 		//圆
 		Polygon circle= new Polygon();
 		double radius = Math.sqrt(Math.pow(startPoint.getX()
@@ -90,7 +107,7 @@ public class LayerActivity extends BaseMapViewActivity {
 				+ Math.pow(startPoint.getY() - nextPoint.getY(), 2));
 		getCircle(startPoint, radius, circle);
 		layer.addGraphic(new Graphic(circle, fillSymbol));
-		
+
 	}
 
 	private Point ptPrevious = null;// 上一个点
@@ -108,7 +125,7 @@ public class LayerActivity extends BaseMapViewActivity {
 		// 面填充
 		SimpleFillSymbol fillSymbol = new SimpleFillSymbol(Color.YELLOW);
 		fillSymbol.setOutline(lineSymbol);
-		
+
 		if (drawLayer.getNumberOfGraphics() == 0) {
 			// 绘制第一个点
 			Graphic graphic = new Graphic(mappoint, markerSymbol);
@@ -149,16 +166,16 @@ public class LayerActivity extends BaseMapViewActivity {
 		}
 		ptPrevious = mappoint;
 	}
-	
+
 	@Override
 	public void onClickAtPoint(TYMapView mapView, Point mappoint) {
 		Log.i(TAG, "Clicked Point: " + mappoint.getX() + ", " + mappoint.getY());
 		//演示两种不同layer+显示图文
 		if(ptPrevious==null)testLayer(mappoint);
-		
+
 		//演示通过两点画线、面、圆
 		//if(ptPrevious!=null)testGeometry(ptPrevious, mappoint);
-		
+
 		//演示连续绘制线段、或面
 		testDrawLayer(mappoint);
 	}
@@ -176,7 +193,7 @@ public class LayerActivity extends BaseMapViewActivity {
 		return sArea;
 	}
 
-//	画圆形
+	//	画圆形
 	private void getCircle(Point center, double radius, Polygon circle) {
 		circle.setEmpty();
 		Point[] points = getPoints(center, radius);
@@ -199,5 +216,39 @@ public class LayerActivity extends BaseMapViewActivity {
 			points[(int) i] = new Point(x, y);
 		}
 		return points;
+	}
+
+	/**
+	 * 文字转换BitMap
+	 * @param text
+	 * @return
+	 */
+	private static Drawable createMapBitMap(String text) {
+
+		Paint paint = new Paint();
+		paint.setColor(Color.BLUE);
+		paint.setTextSize(30);
+		paint.setAntiAlias(true);
+		paint.setTextAlign(Align.CENTER);
+
+		float textLength = paint.measureText(text);
+
+		int width = (int) textLength + 10;
+		int height = 60;
+
+		Bitmap newb = Bitmap.createBitmap(width, height, Config.ARGB_8888);
+
+		Canvas cv = new Canvas(newb);
+		cv.drawColor(Color.parseColor("#00000000"));
+
+		cv.setDrawFilter(new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG
+				| Paint.FILTER_BITMAP_FLAG));
+		cv.drawText(text, width / 2, 30, paint);
+
+		cv.save(Canvas.ALL_SAVE_FLAG);
+		cv.restore();
+
+		return new BitmapDrawable(newb);
+
 	}
 }

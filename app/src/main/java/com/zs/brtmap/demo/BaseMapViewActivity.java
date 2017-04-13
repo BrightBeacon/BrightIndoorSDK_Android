@@ -1,33 +1,19 @@
 package com.zs.brtmap.demo;
-
-import java.io.File;
-import java.math.BigDecimal;
 import java.util.List;
 
-import org.json.JSONObject;
-import org.xutils.common.Callback;
-
 import com.esri.core.geometry.Point;
-import com.ty.mapdata.TYBuilding;
-import com.zs.brtmap.demo.adapter.MenuListAdapter;
-import com.ty.mapsdk.TYBuildingManager;
 import com.ty.mapsdk.TYMapEnvironment;
+import com.zs.brtmap.demo.adapter.MenuListAdapter;
 import com.ty.mapsdk.TYMapInfo;
 import com.ty.mapsdk.TYMapView;
 import com.ty.mapsdk.TYMapView.TYMapViewListenser;
-import com.ty.mapsdk.TYOfflineRouteManager;
-import com.ty.mapsdk.TYOfflineRouteManager.TYOfflineRouteManagerListener;
 import com.ty.mapsdk.TYPoi;
-import com.ty.mapsdk.TYRouteResult;
 import com.zs.brtmap.demo.utils.Constants;
 import com.zs.brtmap.demo.utils.Utils;
-import com.zs.brtmap.demo.http.HttpHandler;
-import com.zs.brtmap.demo.utils.FileHelper;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -40,13 +26,9 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 public abstract class BaseMapViewActivity extends Activity
-		implements TYMapViewListenser, TYOfflineRouteManagerListener {
+		implements TYMapViewListenser {
 	public String TAG = this.getClass().getSimpleName();
 	public TYMapView mapView;
-	public List<TYMapInfo> allMapInfo;
-	public TYOfflineRouteManager routeManager;
-
-	public TYBuilding currentBuilding;
 
 	//楼层控件
 	private PopupWindow pw;
@@ -62,97 +44,40 @@ public abstract class BaseMapViewActivity extends Activity
 		initContentViewID();
 		setContentView(contentViewID);
 
+		TYMapEnvironment.initMapEnvironment();
 		mapView = (TYMapView) findViewById(R.id.map);
-		mapView.setEsriLogoVisible(false);
-		//mapView.setVisibility(View.INVISIBLE);
-		
-		//设置地图加载目录、地图下载目录
-		setMapEnvironment(Constants.BUILDING_ID);
-		initMap();
-		//检查更新
-		updateMapData();
+		//隐藏地图，楼层加载完成前黑屏
+		mapView.setVisibility(View.INVISIBLE);
 
+		mapView.addMapListener(this);
+		mapView.init(Constants.BUILDING_ID,Constants.APP_KEY);
 	}
 	// 用于子类设置界面元素初始化
 	public abstract void initContentViewID();
 
-	// 处理地图License
-	private String trimLicense(String license) {
-		license = license.replaceAll("brtd_", "#");
-		license = license.replaceAll("brtx_", ":");
-		return license;
-	}
-	//设置地图加载目录、下载地图文件目录
-	private void setMapEnvironment(String buildingid) {
-		String dir = Constants.CACHE_DIR  + File.separator + buildingid;
-		TYMapEnvironment.initMapEnvironment();
-		TYMapEnvironment.setRootDirectoryForMapFiles(dir);
-		if (!FileHelper.fileExists(dir)) {
-			if(FileHelper.makeDir(dir)){
-				copyFileIfNeeded(buildingid);
-			}
+
+	@Override
+	public void  mapViewDidLoad(TYMapView mapView,Error error) {
+		if(error == null){
+			showMapControl();
+			//mapView.setMapBackground(网格颜色, 线条颜色, 网格宽度, 线条宽度);
+			//mapView.setMapBackground(Color.BLACK, Color.BLACK, 20, 10);
+			mapView.setFloor(mapView.allMapInfo().get(0).getFloorNumber());
+			mapView.setHighlightPoiOnSelection(false);
+			mapView.setAllowRotationByPinch(true);
+		}else {
+			Utils.showToast(this, error.toString());
 		}
 	}
-	//拷贝默认地图
-	void copyFileIfNeeded(String buildingid) {
-		String sourcePath = buildingid;
-		String targetPath = TYMapEnvironment.getRootDirectoryForMapFiles();
-
-		Log.i(TAG, "source path: " + sourcePath);
-		Log.i(TAG, "target path: " + targetPath);
-
-		//FileHelper.deleteFile(new File(targetPath));
-		FileHelper.copyFolderFromAsset(this, sourcePath, targetPath);
-	}
-	
-	public void mapViewDidLoad() {
+	public void showMapControl() {
 		showFloorControl();
 		showZoomControl();
 		setMinMaxScale(1, 1000);
 	}
-
-	private void initMap() {
-		String filePath = Constants.CACHE_DIR + File.separator
-				+ Constants.BUILDING_ID;
-		if(FileHelper.fileExists(filePath)){
-			try {
-				currentBuilding = TYBuildingManager.parseBuildingFromFilesById(this, Constants.CITY_ID, Constants.BUILDING_ID);
-				allMapInfo = TYMapInfo.parseAllMapInfo(currentBuilding);
-				if (allMapInfo == null || allMapInfo.isEmpty()) {
-					Utils.showToast(this, "解析楼层数据失败");
-					return;
-				}
-				if (!mapView.isLoaded()) {
-					mapView.init(currentBuilding, Constants.APP_KEY, trimLicense(Constants.LICENSE));
-				}else {
-					//更新数据等，重新加载地图
-					mapView.switchBuilding(currentBuilding, Constants.APP_KEY, Constants.LICENSE);
-				}
-				//mapView.setMapBackground(网格颜色, 线条颜色, 网格宽度, 线条宽度);
-				//mapView.setMapBackground(Color.BLACK, Color.BLACK, 20, 10);
-				mapView.setFloor(allMapInfo.get(0));
-				mapView.addMapListener(this);
-				mapView.setHighlightPoiOnSelection(false);
-				mapView.setAllowRotationByPinch(true);
-				mapView.postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						mapViewDidLoad();
-					}
-				}, 100);
-			} catch (Exception e) {
-				// TODO: handle exception
-				Log.e(TAG, e.toString());
-			}
-		}else {
-			Utils.showToast(BaseMapViewActivity.this, "未找到本地地图文件");
-		}
-	}
-
 	public void showFloorControl() {
 		TextView btnFloor = (TextView) findViewById(R.id.btn_floor);
 		ImageView btnFloorArrow = (ImageView) findViewById(R.id.btn_floor_arrow);
-		if (allMapInfo == null || allMapInfo.isEmpty()) {
+		if (mapView.allMapInfo().isEmpty()) {
 			btnFloor.setVisibility(View.GONE);
 			btnFloorArrow.setVisibility(View.VISIBLE);
 			return;
@@ -162,7 +87,6 @@ public abstract class BaseMapViewActivity extends Activity
 		btnFloor.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				createPopwMenu(v);
 			}
 		});
@@ -179,13 +103,13 @@ public abstract class BaseMapViewActivity extends Activity
 			offset = height - offset1;
 			ListView lv = (ListView) view.findViewById(R.id.menu_list);
 
-			menuListAdapter = new MenuListAdapter(allMapInfo);
+			menuListAdapter = new MenuListAdapter(mapView.allMapInfo());
 			lv.setAdapter(menuListAdapter);
 			lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					TYMapInfo currentMapInfo = (TYMapInfo) parent.getItemAtPosition(position);
-					mapView.setFloor(currentMapInfo);
+					mapView.setFloor(currentMapInfo.getFloorNumber());
 					pw.dismiss();
 					menuListAdapter.setSelected(currentMapInfo);
 					btnFloor.setText(currentMapInfo.getFloorName());
@@ -221,17 +145,16 @@ public abstract class BaseMapViewActivity extends Activity
 		TextView btnZoomOut = (TextView) findViewById(R.id.btn_zoomout);
 		btnZoomIn.setVisibility(View.VISIBLE);
 		btnZoomOut.setVisibility(View.VISIBLE);
-        btnZoomIn.setOnClickListener(new View.OnClickListener() {
+		btnZoomIn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				mapView.zoomin();
 			}
 		});
-        btnZoomOut.setOnClickListener(new View.OnClickListener() {
-			
+		btnZoomOut.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				mapView.zoomout();
 			}
 		});
@@ -246,6 +169,27 @@ public abstract class BaseMapViewActivity extends Activity
 		mapView.setMaxScale(min/deviceDistance);//比例尺：1米/屏幕总宽
 		mapView.setMinScale(max/deviceDistance);//比例尺：100米/屏幕总宽
 	}
+	@Override
+	public void onFinishLoadingFloor(final TYMapView mapView, TYMapInfo mapInfo) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				mapView.setVisibility(View.VISIBLE);
+			}
+		});
+		/*地图楼层切换
+		//设置比例尺让：地图宽==屏幕宽
+		DisplayMetrics metrics = getResources().getDisplayMetrics();
+		double deviceDistance = metrics.widthPixels/metrics.xdpi*0.0254;
+		double mapDistance = mapInfo.getMapExtent().getXmax() - mapInfo.getMapExtent().getXmin();
+		mapView.setScale(mapDistance/deviceDistance);
+
+		//移动到地图中心点
+		double centerX = mapInfo.getMapExtent().getXmax()+mapInfo.getMapExtent().getXmin();
+		double centerY = mapInfo.getMapExtent().getYmax()+mapInfo.getMapExtent().getYmin();
+		mapView.centerAt(new Point(centerX/2,centerY/2),false);*/
+	}
+
 
 	@Override
 	public void onClickAtPoint(TYMapView mapView, Point mappoint) {
@@ -256,12 +200,6 @@ public abstract class BaseMapViewActivity extends Activity
 	public void onPoiSelected(TYMapView mapView, List<TYPoi> poiList) {
 		//poi选中
 	}
-
-	@Override
-	public void onFinishLoadingFloor(TYMapView mapView, TYMapInfo mapInfo) {
-		//地图楼层切换
-	}
-
 	@Override
 	public void mapViewDidZoomed(TYMapView mapView) {
 		//地图缩放
@@ -278,134 +216,5 @@ public abstract class BaseMapViewActivity extends Activity
 	protected void onPause() {
 		super.onPause();
 		mapView.pause();
-	}
-	//路径规划回调
-	@Override
-	public void didFailSolveRouteWithError(TYOfflineRouteManager arg0, Exception arg1) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void didSolveRouteWithResult(TYOfflineRouteManager arg0, TYRouteResult tyRouteResult) {
-		// TODO Auto-generated method stub
-	}
-	
-	//检查地图更新操作
-	private void updateMapData() {
-		HttpHandler.updateMap(new Callback.ProgressCallback<String>() {
-
-			@Override
-			public void onCancelled(CancelledException arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onError(Throwable arg0, boolean arg1) {
-				// TODO Auto-generated method stub
-				//Utils.showToast(BaseMapViewActivity.this, "更新数据失败");
-			}
-
-			@Override
-			public void onFinished() {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void onSuccess(String result) {
-				// TODO Auto-generated method stub
-				if (!TextUtils.isEmpty(result)) {
-                    try {
-                        JSONObject obj = new JSONObject(result);
-                        int code = obj.getInt("code");
-                        if (code == 1) {
-							String version = obj.getJSONObject("rlt").getString("version");
-							String localVersion = Utils.getValue(BaseMapViewActivity.this, Constants.VER_MAP_DATA, "", String.class);
-							if (!localVersion.equals(version)) {
-								downloadMapData(version);
-							}else {
-								Utils.showToast(BaseMapViewActivity.this,"无数据更新");
-							}
-						}else {
-							Utils.showToast(BaseMapViewActivity.this,"检查数据更新失败");
-						}
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-			}
-
-			@Override
-			public void onLoading(long arg0, long arg1, boolean arg2) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onStarted() {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onWaiting() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-	}
-	private void downloadMapData(final String version) {
-		Utils.showProgressDialog(this, "地图下载中...", true);
-		HttpHandler.downloadMapData(new Callback.ProgressCallback<File>() {
-			@Override
-			public void onSuccess(File result) {
-				String filePath = Constants.CACHE_DIR + File.separator
-						+ Constants.BUILDING_ID;
-				if (!FileHelper.unZipFile(result.getPath(),filePath)) {
-					Utils.showToast(BaseMapViewActivity.this, "地图文件解压失败.");
-					Utils.closeProgressDialog();
-				} else {
-					Utils.closeProgressDialog();
-					Utils.saveValue(BaseMapViewActivity.this, Constants.VER_MAP_DATA,version);
-					initMap();
-				}
-			}
-
-			@Override
-			public void onError(Throwable ex, boolean isOnCallback) {
-				Utils.showToast(BaseMapViewActivity.this, "地图文件下载失败.");
-				Utils.closeProgressDialog();
-			}
-
-			@Override
-			public void onCancelled(CancelledException cex) {
-				Utils.closeProgressDialog();
-			}
-
-			@Override
-			public void onFinished() {
-			}
-
-			@Override
-			public void onWaiting() {
-
-			}
-
-			@Override
-			public void onStarted() {
-
-			}
-
-			@Override
-			public void onLoading(long total, long current, boolean isDownloading) {
-				BigDecimal totalNum = new BigDecimal(total);
-				BigDecimal currentNum = new BigDecimal(current);
-				BigDecimal result = currentNum.divide(totalNum, 2, BigDecimal.ROUND_HALF_EVEN);
-				int rogress = (int) (result.doubleValue() * 100);
-				System.out.println("progress:" + rogress);
-			}
-		});
 	}
 }
