@@ -47,9 +47,9 @@ static {
 ```
 #### 3.3. 在Activity的布局文件xml中添加地图控件 
 ```
-<com.ty.mapsdk.TYMapView android:id="@+id/map" 
-						  android:layout_width="match_parent" 
-						  android:layout_height="match_parent" />
+<com.ty.mapsdk.TYMapView android:id="@+id/map"
+android:layout_width="match_parent"
+android:layout_height="match_parent" />
 ```
 #### 3.4.初始化mapView,代码详见BaseMapActivity.java 
 #####1.设置地图数据保存在SD卡的位置
@@ -240,4 +240,4 @@ public void didUpdateLocation(TYLocationManager arg0, TYLocalPoint newLocalPoint
 * [社区提问](http://bbs.brtbeacon.com)
 * [智石官网](http://www.brtbeacon.com)
 
-#### 商务合作、地图绘制咨询4000-999-023
+#### 商务合作、地图绘制咨询[4000-999-023](tel:4000999023)
