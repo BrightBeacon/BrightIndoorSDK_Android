@@ -52,14 +52,14 @@ android:layout_width="match_parent"
 android:layout_height="match_parent" />
 ```
 #### 3.4.初始化mapView,代码详见BaseMapActivity.java 
-#####1.设置地图数据保存在SD卡的位置
+##### 1.设置地图数据保存在SD卡的位置
 
 ```
 TYMapEnvironment.initMapEnvironment(); 
 TYMapEnvironment.setRootDirectoryForMapFiles(dir); 
 ```
 
-#####2.初始化地图监听、并加载地图数据 - 加载地图需要用到建筑标识buildingID，并传人授权appKey以验证地图使用权限
+##### 2.初始化地图监听、并加载地图数据 - 加载地图需要用到建筑标识buildingID，并传人授权appKey以验证地图使用权限
 
 ```
 mapView = (TYMapView) findViewById(R.id.map); 
