@@ -56,7 +56,7 @@ public class RouteActivity extends BaseMapViewActivity implements TYOfflineRoute
 		if (error != null) return;
 
 		super.mapViewDidLoad(mapView,error);
-//		initSymbols();
+		initSymbols();
 		// 建筑参数初始化完成
 		new Thread(new Runnable() {
 			@Override
