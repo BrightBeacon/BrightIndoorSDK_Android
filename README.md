@@ -9,13 +9,13 @@ Eclipse版Demo->[室内开发包Eclipse](https://github.com/BrightBeacon/BrightI
 ### 二、准备工作 
 #### 2.1. 新建android工程，将jar包和动态库so复制到项目的libs文件夹中,AndroidStudio需要在build.gradle中指定so库的位置信息,如下： 
 ```
-	android { 
-		sourceSets { 
-			main { 
-				jniLibs.srcDir(['libs']) 
-				} 
-			  } 
-			} 
+android { 
+	sourceSets {
+        main {
+            jniLibs.srcDir(['libs'])
+        }
+    } 
+} 
 ```
 #### 2.2.复制地图中用的到资源图片到res下的drawable-hdpi文件夹下 
 ```
@@ -52,17 +52,19 @@ static {
 						  android:layout_height="match_parent" />
 ```
 #### 3.4.初始化mapView,代码详见BaseMapActivity.java 
-1.设置地图数据保存在SD卡的位置
+#####1.设置地图数据保存在SD卡的位置
 
 ```
 TYMapEnvironment.initMapEnvironment(); 
 TYMapEnvironment.setRootDirectoryForMapFiles(dir); 
 ```
 
-2.初始化地图监听、并加载地图数据 - 加载地图需要用到建筑标识buildingID，并传人授权appKey以验证地图使用权限
+#####2.初始化地图监听、并加载地图数据 - 加载地图需要用到建筑标识buildingID，并传人授权appKey以验证地图使用权限
 
 ```
-mapView = (TYMapView) findViewById(R.id.map); mapView.addMapListener(this); mapView.init(Constants.BUILDING_ID,Constants.APP_KEY); 申请appKey:(http://open.brtbeacon.com)
+mapView = (TYMapView) findViewById(R.id.map); 
+mapView.addMapListener(this); 
+mapView.init(Constants.BUILDING_ID,Constants.APP_KEY); 申请appKey:(http://open.brtbeacon.com)
 ```
 #### 3.5.以上步骤完成后，地图资源准备就绪后回调如下方法，请设定显示楼层信息 
 ```
@@ -138,15 +140,6 @@ locationManager.setBeaconRegion(Arrays.asList(new BeaconRegion[]{region}));
 ```
 #### 6.3. 实现接口TYLocationManager.TYLocationManagerListener接口
 ```
-@Override
-public void didFailUpdateLocation(TYLocationManager tyLocationManager) {
-    //更新位置错误 
-}
-
-@Override
-public void didUpdateDeviceHeading(TYLocationManager tyLocationManager, double v) {
-	//设备方向改变事件回调
-}
 @Override
 public void didRangedBeacons(TYLocationManager arg0, List<TYBeacon> arg1) {
 	//  Beacon扫描结果事件回调，返回符合扫描参数的所有Beacon
