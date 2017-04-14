@@ -177,9 +177,10 @@ public abstract class BaseMapViewActivity extends Activity
 				mapView.setVisibility(View.VISIBLE);
 			}
 		});
-		/*地图楼层切换
+		//地图楼层切换
 		//设置比例尺让：地图宽==屏幕宽
 		DisplayMetrics metrics = getResources().getDisplayMetrics();
+		Log.i(TAG,metrics.widthPixels+"/"+metrics.heightPixels+"/"+metrics.xdpi+"/"+metrics.ydpi+"/"+metrics.density);
 		double deviceDistance = metrics.widthPixels/metrics.xdpi*0.0254;
 		double mapDistance = mapInfo.getMapExtent().getXmax() - mapInfo.getMapExtent().getXmin();
 		mapView.setScale(mapDistance/deviceDistance);
@@ -187,7 +188,7 @@ public abstract class BaseMapViewActivity extends Activity
 		//移动到地图中心点
 		double centerX = mapInfo.getMapExtent().getXmax()+mapInfo.getMapExtent().getXmin();
 		double centerY = mapInfo.getMapExtent().getYmax()+mapInfo.getMapExtent().getYmin();
-		mapView.centerAt(new Point(centerX/2,centerY/2),false);*/
+		mapView.centerAt(new Point(centerX/2,centerY/2),false);
 	}
 
 

@@ -5,5 +5,5 @@
 	backgroundAlpha="255"
 	frameColor="#66FFCC"	
 	cornerCurve="10"  
-	anchor="5" />
+	anchor="5"/>
 </resources>

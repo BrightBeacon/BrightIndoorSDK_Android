@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
-import org.xutils.x;
 /**
  * 导航菜单页
  * 
@@ -25,9 +24,6 @@ public class MenuActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu_layout);
-// 初始化Xutils
-		x.Ext.init(getApplication());
-		x.Ext.setDebug(true);
 		initView();
 		initListener();
 	}
