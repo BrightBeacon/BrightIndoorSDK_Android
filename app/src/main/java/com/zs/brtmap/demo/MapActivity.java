@@ -9,22 +9,24 @@ import com.esri.android.map.GraphicsLayer;
 import com.esri.core.geometry.Point;
 import com.esri.core.map.Graphic;
 import com.ty.mapsdk.TYMapView;
-import com.ty.mapsdk.TYOfflineRouteManager;
 import com.ty.mapsdk.TYPictureMarkerSymbol;
 import com.ty.mapsdk.TYPoi;
-import com.ty.mapsdk.TYRouteResult;
 
 public class MapActivity extends BaseMapViewActivity {
 	static {
 		System.loadLibrary("TYMapSDK");
 		//System.loadLibrary("TYLocationEngine");
 	}
-	Boolean isFirst = true;
 	GraphicsLayer graphicsLayer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
 	}
 
 	@Override
@@ -54,10 +56,5 @@ public class MapActivity extends BaseMapViewActivity {
 		graphicsLayer.addGraphic(new Graphic(new Point(mappoint.getX(),
 				mappoint.getY()), pms));
 
-	}
-
-	@Override
-	public void onPoiSelected(TYMapView mapView, List<TYPoi> poiList) {
-		mapView.highlightPois(poiList);
 	}
 }

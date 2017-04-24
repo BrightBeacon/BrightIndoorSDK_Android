@@ -1,6 +1,7 @@
 package com.zs.brtmap.demo;
 import java.util.List;
 
+import com.esri.android.map.Layer;
 import com.esri.core.geometry.Point;
 import com.ty.mapsdk.TYMapEnvironment;
 import com.zs.brtmap.demo.adapter.MenuListAdapter;
@@ -47,10 +48,15 @@ public abstract class BaseMapViewActivity extends Activity
 		TYMapEnvironment.initMapEnvironment();
 		mapView = (TYMapView) findViewById(R.id.map);
 		//隐藏地图，楼层加载完成前黑屏
-		mapView.setVisibility(View.INVISIBLE);
+		//mapView.setVisibility(View.INVISIBLE);
 
 		mapView.addMapListener(this);
 		mapView.init(Constants.BUILDING_ID,Constants.APP_KEY);
+		mapView.setHighlightPoiOnSelection(false);
+		mapView.setAllowRotationByPinch(true);
+
+		//mapView.setMapBackground(网格颜色, 线条颜色, 网格宽度, 线条宽度);
+		//mapView.setMapBackground(Color.BLACK, Color.BLACK, 20, 10);
 	}
 	// 用于子类设置界面元素初始化
 	public abstract void initContentViewID();
@@ -60,11 +66,7 @@ public abstract class BaseMapViewActivity extends Activity
 	public void  mapViewDidLoad(TYMapView mapView,Error error) {
 		if(error == null){
 			showMapControl();
-			//mapView.setMapBackground(网格颜色, 线条颜色, 网格宽度, 线条宽度);
-			//mapView.setMapBackground(Color.BLACK, Color.BLACK, 20, 10);
-			mapView.setFloor(mapView.allMapInfo().get(0).getFloorNumber());
-			mapView.setHighlightPoiOnSelection(false);
-			mapView.setAllowRotationByPinch(true);
+			mapView.setFloor(mapView.allMapInfo().get(0));
 		}else {
 			Utils.showToast(this, error.toString());
 		}
@@ -109,7 +111,7 @@ public abstract class BaseMapViewActivity extends Activity
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					TYMapInfo currentMapInfo = (TYMapInfo) parent.getItemAtPosition(position);
-					mapView.setFloor(currentMapInfo.getFloorNumber());
+					mapView.setFloor(currentMapInfo);
 					pw.dismiss();
 					menuListAdapter.setSelected(currentMapInfo);
 					btnFloor.setText(currentMapInfo.getFloorName());
@@ -171,17 +173,18 @@ public abstract class BaseMapViewActivity extends Activity
 	}
 	@Override
 	public void onFinishLoadingFloor(final TYMapView mapView, TYMapInfo mapInfo) {
-		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				mapView.setVisibility(View.VISIBLE);
-			}
-		});
+		//显示地图
+//		runOnUiThread(new Runnable() {
+//			@Override
+//			public void run() {
+//				mapView.setVisibility(View.VISIBLE);
+//			}
+//		});
 		//地图楼层切换
 		//设置比例尺让：地图宽==屏幕宽
 		DisplayMetrics metrics = getResources().getDisplayMetrics();
 		Log.i(TAG,metrics.widthPixels+"/"+metrics.heightPixels+"/"+metrics.xdpi+"/"+metrics.ydpi+"/"+metrics.density);
-		double deviceDistance = metrics.widthPixels/metrics.xdpi*0.0254;
+		double deviceDistance = mapView.getMeasuredWidth()/metrics.xdpi*0.0254;
 		double mapDistance = mapInfo.getMapExtent().getXmax() - mapInfo.getMapExtent().getXmin();
 		mapView.setScale(mapDistance/deviceDistance);
 
@@ -206,6 +209,11 @@ public abstract class BaseMapViewActivity extends Activity
 		//地图缩放
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mapView.destroyDrawingCache();
+	}
 
 	@Override
 	protected void onResume() {

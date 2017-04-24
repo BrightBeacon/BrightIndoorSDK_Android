@@ -18,6 +18,7 @@ import com.ty.mapsdk.TYOfflineRouteManager.TYOfflineRouteManagerListener;
 import com.zs.brtmap.demo.utils.Utils;
 
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,9 +57,8 @@ public class RouteActivity extends BaseMapViewActivity implements TYOfflineRoute
 
 	@Override
 	public void mapViewDidLoad(final TYMapView mapView, Error error) {
-		if (error != null) return;
-
 		super.mapViewDidLoad(mapView,error);
+		if (error != null) return;
 		initSymbols();
 		// 建筑参数初始化完成
 		new Thread(new Runnable() {
@@ -99,7 +99,6 @@ public class RouteActivity extends BaseMapViewActivity implements TYOfflineRoute
 	public void onClickAtPoint(TYMapView mapView, Point mappoint) {
 		Log.i(TAG, "Clicked Point: " + mappoint.getX() + ", " +  mappoint.getY());
 
-
 		if (isRouting){
 			TYLocalPoint localPoint = p2lp(mappoint);
 			if (localPoint.distanceWithPoint(endPoint)<=2){
@@ -117,9 +116,12 @@ public class RouteActivity extends BaseMapViewActivity implements TYOfflineRoute
 			}
 			mapView.showPassedAndRemainingRouteResultOnCurrentFloor(localPoint);
 			//显示路径提示
+			//获取最近的路径线段，同一层有隔断，可能出现多个路线
 			TYRoutePart part = routeResult.getNearestRoutePart(localPoint);
 			if (part != null) {
+				//获取整路段方向提示
 				List<TYDirectionalHint> hints = routeResult.getRouteDirectionalHint(part);
+				//获取点最近的路段提示
 				TYDirectionalHint hint  = routeResult.getDirectionalHintForLocationFromHints(localPoint,hints);
 				if(hint != null){
 					Log.i(TAG,hint.getDirectionString());
@@ -247,7 +249,6 @@ public class RouteActivity extends BaseMapViewActivity implements TYOfflineRoute
 
 	@Override
 	public void onFinishLoadingFloor(TYMapView mapView, TYMapInfo mapInfo) {
-		// TODO Auto-generated method stub
 		super.onFinishLoadingFloor(mapView, mapInfo);
 		if (isRouting) {
 			mapView.showRouteResultOnCurrentFloor();

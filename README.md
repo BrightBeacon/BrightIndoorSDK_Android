@@ -7,7 +7,7 @@ Eclipse版Demo->[室内开发包Eclipse](https://github.com/BrightBeacon/BrightI
 ### 一、简介
 室内定位开发包是基于ArcGIS框架和GEOS几何计算开源库，为开发者提供了的室内地图显示、路径规划、室内定位等相关GIS功能。**本开发包支持的Android版本为18或更高** 
 ### 二、准备工作 
-#### 2.1. 新建android工程，将jar包和动态库so复制到项目的libs文件夹中,AndroidStudio需要在build.gradle中指定so库的位置信息,如下： 
+#### 2.1. 新建android工程，将libs/*.jar包和动态库so复制到项目的libs文件夹中,AndroidStudio需要在build.gradle中指定so库的位置信息,如下： 
 ```
 android { 
 	sourceSets {
@@ -19,7 +19,7 @@ android {
 ```
 #### 2.2.复制地图中用的到资源图片到res下的drawable-hdpi文件夹下 
 ```
-资源图片在demo工程的app/src/main/res/drawable-hdpi文件夹下所有文件 
+资源图片在demo工程的app/src/main/res/drawable-hdpi下所有地图图标文件 
 ```
 ### 三、基础地图展示 
 #### 3.1.配置AndroidManifest.xml所需权限
@@ -52,7 +52,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent" />
 ```
 #### 3.4.初始化mapView,代码详见BaseMapActivity.java 
-##### 1.设置地图数据保存在SD卡的位置
+##### 1.设置地图数据保存在SD卡的位置，默认TYData
 
 ```
 TYMapEnvironment.initMapEnvironment(); 
@@ -62,17 +62,20 @@ TYMapEnvironment.setRootDirectoryForMapFiles(dir);
 ##### 2.初始化地图监听、并加载地图数据 - 加载地图需要用到建筑标识buildingID，并传人授权appKey以验证地图使用权限
 
 ```
-mapView = (TYMapView) findViewById(R.id.map); 
+mapView = (TYMapView) findViewById(R.id.map);
+//设置地图回调
 mapView.addMapListener(this); 
+//预设楼层
+mapView.setFloor("B1");
+//加载地图资源
 mapView.init(Constants.BUILDING_ID,Constants.APP_KEY); 申请appKey:(http://open.brtbeacon.com)
 ```
-#### 3.5.以上步骤完成后，地图资源准备就绪后回调如下方法，请设定显示楼层信息 
+#### 3.5.以上步骤完成后，地图资源准备就绪后回调如下方法；此处也可设置、获取楼层信息 
 ```
 @Override public void mapViewDidLoad(TYMapView mapView,Error error) { 
 	if(error == null){ 
-		//mapView.setMapBackground(网格颜色, 线条颜色, 网格总宽度, 线条宽度); 
-		//mapView.setMapBackground(Color.BLACK, Color.BLACK, 20, 10); 
-		mapView.setFloor(mapView.allMapInfo().get(0).getFloorNumber); 
+		List<TYMapInfo> mapInfos = mapView.allMapInfo(); 
+		//mapView.setFloor(mapInfos.get(0));
 	}else { 
 		Utils.showToast(this, error.toString()); 
 	} 
@@ -139,6 +142,7 @@ BeaconRegion region = new BeaconRegion("demo",Constants.UUID,null,null);
 locationManager.setBeaconRegion(Arrays.asList(new BeaconRegion[]{region}));
 ```
 #### 6.3. 实现接口TYLocationManager.TYLocationManagerListener接口
+
 ```
 @Override
 public void didRangedBeacons(TYLocationManager arg0, List<TYBeacon> arg1) {
