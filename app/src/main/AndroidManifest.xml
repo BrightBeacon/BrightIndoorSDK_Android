@@ -26,11 +26,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapActivity"></activity>
-        <activity android:name=".CalloutActivity"></activity>
-        <activity android:name=".LayerActivity"></activity>
-        <activity android:name=".RouteActivity"></activity>
-        <activity android:name=".LocationActivity"></activity>
+        <activity android:name=".MapActivity" />
+        <activity android:name=".CalloutActivity" />
+        <activity android:name=".LayerActivity" />
+        <activity android:name=".RouteActivity" />
+        <activity android:name=".LocationActivity"/>
+        <activity
+            android:name=".searchActivity"
+            android:label="@string/title_activity_search"></activity>
 
         <!-- 定位服务 -->
         <service android:name="com.ty.locationengine.ibeacon.BeaconService" />

@@ -4,5 +4,6 @@
     <string name="app_name">智石地图Demo</string>
     <string name="cancel">取消</string>
     <string name="done">确认</string>
+    <string name="title_activity_search">搜索</string>
 
 </resources>

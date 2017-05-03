@@ -19,6 +19,7 @@ public class MenuActivity extends Activity implements OnClickListener {
 	private TextView showMapLayer;
 	private TextView showRoute;
 	private TextView showLocation;
+	private TextView showSearch;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +35,14 @@ public class MenuActivity extends Activity implements OnClickListener {
 		showMapLayer.setOnClickListener(this);
 		showRoute.setOnClickListener(this);
 		showLocation.setOnClickListener(this);
+		showSearch.setOnClickListener(this);
 	}
 
 	private void initView() {
 		baseMap = (TextView) findViewById(R.id.show_base_map);
 		showCallout = (TextView) findViewById(R.id.show_map_callout);
 		showMapLayer = (TextView) findViewById(R.id.show_map_layer);
+		showSearch = (TextView) findViewById(R.id.show_search);
 		showRoute = (TextView) findViewById(R.id.show_map_route);
 		showLocation = (TextView) findViewById(R.id.show_location);
 	}
@@ -63,6 +66,9 @@ public class MenuActivity extends Activity implements OnClickListener {
 		case R.id.show_location:
 			intent = new Intent(this, LocationActivity.class);
 			break;
+		case R.id.show_search:
+				intent = new Intent(this, searchActivity.class);
+				break;
 		}
 		if (intent != null) {
 			startActivity(intent);
