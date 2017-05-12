@@ -77,10 +77,12 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
 			return;
 		}
 		//mapView加载完毕,设置定位图片
-		TYPictureMarkerSymbol pic = new TYPictureMarkerSymbol(getResources().getDrawable(R.drawable.location));
+		TYPictureMarkerSymbol pic = new TYPictureMarkerSymbol(getResources().getDrawable(R.drawable.location_arrow));
 		pic.setWidth(48);
 		pic.setHeight(48);
 		mapView.setLocationSymbol(pic);
+
+		mapView.setMapMode(TYMapView.TYMapViewMode.TYMapViewModeFollowing);
 		//currentBuilding被初始化
 		initLocation();
 	}
@@ -111,6 +113,7 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
 
 	@Override
 	public void didUpdateDeviceHeading(TYLocationManager arg0, double newHeading) {
+		//如方位有误，尝试打开手机校准指南针。
 		// 设备方向改变事件回调。结合地图MapMode可以处理地图自动旋转，或箭头方向功能。
 		//mapView.setMapMode(TYMapViewMode.TYMapViewModeDefault);
 		//mapView.setMapMode(TYMapViewMode.TYMapViewModeFollowing);

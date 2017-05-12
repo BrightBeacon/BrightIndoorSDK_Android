@@ -3,6 +3,7 @@ package com.zs.brtmap.demo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
+import android.widget.SearchView;
 
 import com.esri.android.map.GraphicsLayer;
 import com.esri.core.geometry.Point;
@@ -16,12 +17,14 @@ import com.ty.mapsdk.TYPictureMarkerSymbol;
 import com.ty.mapsdk.TYSearchAdapter;
 import com.zs.brtmap.demo.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class searchActivity extends BaseMapViewActivity {
 
     List<PoiEntity> searchList;
     GraphicsLayer poiLayer;
+    SearchView searchView;
     static final String TAG = CalloutActivity.class.getSimpleName();
     static {
         System.loadLibrary("TYMapSDK");
@@ -30,6 +33,26 @@ public class searchActivity extends BaseMapViewActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        searchView = (SearchView) findViewById(R.id.searchView);
+        // 设置搜索文本监听
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            // 当点击搜索按钮时触发该方法
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            // 当搜索内容改变时触发该方法
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                poiLayer.removeAll();
+                if (newText.length()>0) {
+                    showPoiByName(newText);
+                }
+                return false;
+            }
+        });
+
     }
 
     @Override
@@ -46,20 +69,46 @@ public class searchActivity extends BaseMapViewActivity {
         }
     }
 
+    private  TYPictureMarkerSymbol getGreenpinSymbol() {
+        TYPictureMarkerSymbol symbol = new TYPictureMarkerSymbol(getResources().getDrawable(R.drawable.green_pushpin));
+        symbol.setWidth(20);
+        symbol.setHeight(20);
+        symbol.setOffsetX(5);
+        symbol.setOffsetY(10);
+        return symbol;
+    }
+
+    private  TYPictureMarkerSymbol getRedpinSymbol() {
+        TYPictureMarkerSymbol symbol = new TYPictureMarkerSymbol(getResources().getDrawable(R.drawable.red_pushpin));
+        symbol.setWidth(20);
+        symbol.setHeight(20);
+        symbol.setOffsetX(5);
+        symbol.setOffsetY(10);
+        return symbol;
+    }
+
     @Override
     public void onFinishLoadingFloor(TYMapView mapView, TYMapInfo mapInfo) {
         super.onFinishLoadingFloor(mapView, mapInfo);
         poiLayer.removeAll();
+    }
+
+    @Override
+    public void onClickAtPoint(TYMapView mapView, Point mappoint) {
+        super.onClickAtPoint(mapView, mappoint);
+        Point screenPoint = mapView.toScreenPoint(mappoint);
+        int[] graphicIDs = poiLayer.getGraphicIDs((float) screenPoint.getX(),(float) screenPoint.getY(),0);
+        if (graphicIDs.length > 0) {
+            poiLayer.updateGraphic(graphicIDs[0],getRedpinSymbol());
+        }
+
+    }
+    private void showPoiByName(String name) {
         TYSearchAdapter searchAdapter = new TYSearchAdapter(mapView.building.getBuildingID());
-        searchList = searchAdapter.queryPoi("",mapInfo.getFloorNumber());
+        searchList = searchAdapter.queryPoi(name,mapView.currentMapInfo.getFloorNumber());
         for (PoiEntity entity : searchList) {
-            TYPictureMarkerSymbol symbol = new TYPictureMarkerSymbol(getResources().getDrawable(R.drawable.green_pushpin));
-            symbol.setWidth(20);
-            symbol.setHeight(20);
-            symbol.setOffsetX(5);
-            symbol.setOffsetY(10);
             Point point = new Point(entity.getLabelX(),entity.getLabelY());
-            Graphic graphic = new Graphic(point,symbol);
+            Graphic graphic = new Graphic(point,getGreenpinSymbol());
             poiLayer.addGraphic(graphic);
 
             TextSymbol textSymbol = new TextSymbol("DroidSansFallback.ttf",entity.getName(), Color.BLACK);
