@@ -3,7 +3,11 @@ package com.zs.brtmap.demo;
 import java.util.Arrays;
 import java.util.List;
 
+import com.esri.android.map.GraphicsLayer;
 import com.esri.core.geometry.Envelope;
+import com.esri.core.geometry.Point;
+import com.esri.core.map.Graphic;
+import com.esri.core.symbol.TextSymbol;
 import com.ty.locationengine.ble.TYBLEEnvironment;
 import com.ty.locationengine.ble.TYBeacon;
 import com.ty.locationengine.ble.TYLocationManager;
@@ -18,6 +22,7 @@ import com.ty.mapsdk.TYPictureMarkerSymbol;
 import com.zs.brtmap.demo.utils.Constants;
 import com.zs.brtmap.demo.utils.Utils;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +32,8 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
 
 	private TYLocationManager locationManager;
 	private boolean isShowLocation;
+
+	GraphicsLayer hintLayer;
 
 	static {
 		System.loadLibrary("TYMapSDK");
@@ -81,8 +88,8 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
 		pic.setWidth(48);
 		pic.setHeight(48);
 		mapView.setLocationSymbol(pic);
-
-		mapView.setMapMode(TYMapView.TYMapViewMode.TYMapViewModeFollowing);
+	//设置地图跟随旋转
+//		mapView.setMapMode(TYMapView.TYMapViewMode.TYMapViewModeFollowing);
 		//currentBuilding被初始化
 		initLocation();
 	}
@@ -91,8 +98,8 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
 		try {
 			locationManager = new TYLocationManager(this, Constants.BUILDING_ID, Constants.APP_KEY);
 			locationManager.addLocationEngineListener(this);
-			BeaconRegion region = new BeaconRegion("demo",Constants.UUID,null,null);
-			locationManager.setBeaconRegion(Arrays.asList(new BeaconRegion[]{region}));
+//			BeaconRegion region = new BeaconRegion("demo",Constants.UUID,Constants.MAJOR,null);
+//			locationManager.setBeaconRegion(Arrays.asList(new BeaconRegion[]{region}));
 		} catch (Exception e) {
 			// TODO: handle exception
 			Log.e(TAG, e.toString());
@@ -108,7 +115,19 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
 	@Override
 	public void didRangedLocationBeacons(TYLocationManager arg0, List<TYPublicBeacon> arg1) {
 		//  定位Beacon扫描结果事件回调，返回符合扫描参数的定位Beacon，定位Beacon包含坐标信息。此方法可用于辅助巡检，以及基于定位beacon的相关触发事件。
-
+		if (hintLayer == null) {
+			hintLayer = new GraphicsLayer();
+			mapView.addLayer(hintLayer);
+		}
+		hintLayer.removeAll();
+		Graphic[] graphics = new  Graphic[arg1.size()];
+		int i = 0;
+		for (TYPublicBeacon pb : arg1) {
+			Graphic g = new Graphic(new Point(pb.getLocation().getX(),pb.getLocation().getY()),new TextSymbol(13,pb.getRssi()+"", Color.RED));
+			graphics[i] = g;
+			i++;
+		}
+		hintLayer.addGraphics(graphics);
 	}
 
 	@Override
@@ -122,21 +141,21 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
 	}
 
 	@Override
-	public void didUpdateImmediateLocation(TYLocationManager arg0, TYLocalPoint arg1) {
+	public void didUpdateImmediateLocation(TYLocationManager arg0, TYLocalPoint  newLocalPoint) {
 		//  *  位置更新事件回调，位置更新并返回新的位置结果。
 		// 与[TYLocationManager:didUpdateLocatin:]方法相近，此方法回调结果未融合计步器信息，灵敏度较高，适合用于行车场景下
+		mapView.showLocation(newLocalPoint);
 
 	}
 
 	@Override
 	public void didFailUpdateLocation(TYLocationManager tyLocationManager, Error error) {
-		if (error != null) Log.i(TAG,error.toString());
+		if (error != null) Log.e(TAG,error.toString());
 	}
 
 	@Override
 	public void didUpdateLocation(TYLocationManager arg0, TYLocalPoint newLocalPoint) {
 		//  位置更新事件回调，位置更新并返回新的位置结果。
-		//  与[TYLocationManager:didUpdateImmediationLocation:]方法相近，此方法回调结果融合计步器信息，稳定性较好，适合用于步行场景下。
-		mapView.showLocation(newLocalPoint);
+		//  与[TYLocationManager:didUpdateImmediationLocation:]方法相近，此方法回调结果融合计步器信息，稳定性较好，适合用于步行场景下
 	}
 }
