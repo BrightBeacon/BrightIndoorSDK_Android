@@ -47,48 +47,62 @@ public class FileHelper {
 	public static void copyFolderFromAsset(Context context, String sourcePath,
 			String targetPath) {
 		try {
-			(new File(targetPath)).mkdirs();
 
 			String[] childs = context.getAssets().list(sourcePath);
 
-			File temp = null;
+            if (childs.length > 0) {
+                (new File(targetPath)).mkdirs();
+                File temp = null;
 
-			for (int i = 0; i < childs.length; i++) {
-				if (sourcePath.endsWith(File.separator)) {
-					temp = new File(sourcePath + childs[i]);
-				} else {
-					temp = new File(sourcePath + File.separator + childs[i]);
-				}
+                for (int i = 0; i < childs.length; i++) {
+                    if (sourcePath.endsWith(File.separator)) {
+                        temp = new File(sourcePath + childs[i]);
+                    } else {
+                        temp = new File(sourcePath + File.separator + childs[i]);
+                    }
 
-				int lastIndex = temp.toString().lastIndexOf(".");
+                    int lastIndex = temp.toString().lastIndexOf(".");
 
-				if (lastIndex != -1) {
-					InputStream input = context.getAssets().open(
-							temp.toString());
+                    if (lastIndex != -1) {
+                        InputStream input = context.getAssets().open(
+                                temp.toString());
 
-					FileOutputStream output = new FileOutputStream(targetPath
-							+ File.separator + temp.getName());
+                        FileOutputStream output = new FileOutputStream(targetPath
+                                + File.separator + temp.getName());
 
-					byte[] b = new byte[1024 * 5];
-					int length;
-					while ((length = input.read(b)) != -1) {
-						output.write(b, 0, length);
-					}
+                        byte[] b = new byte[1024 * 5];
+                        int length;
+                        while ((length = input.read(b)) != -1) {
+                            output.write(b, 0, length);
+                        }
 
-					output.flush();
-					output.close();
-					input.close();
-				}
+                        output.flush();
+                        output.close();
+                        input.close();
+                    }
 
-				if (lastIndex == -1) {
-					copyFolderFromAsset(context, sourcePath + File.separator
-							+ childs[i], targetPath + File.separator
-							+ childs[i]);
-				}
-			}
+                    if (lastIndex == -1) {
+                        copyFolderFromAsset(context, sourcePath + File.separator
+                                + childs[i], targetPath + File.separator
+                                + childs[i]);
+                    }
+                }
+            }else{
+                InputStream is = context.getAssets().open(sourcePath);
+                FileOutputStream fos = new FileOutputStream(new File(targetPath));
+                byte[] buffer = new byte[1024];
+                int byteCount = 0;
+                while ((byteCount = is.read(buffer)) != -1) {// 循环从输入流读取
+                    // buffer字节
+                    fos.write(buffer, 0, byteCount);// 将读取的输入流写入到输出流
+                }
+                fos.flush();// 刷新缓冲区
+                is.close();
+                fos.close();
+            }
 
 		} catch (Exception e) {
-			System.out.println("复制整个文件夹内容操作出错");
+			System.out.println("复制整个文件内容操作出错");
 			e.printStackTrace();
 		}
 	}

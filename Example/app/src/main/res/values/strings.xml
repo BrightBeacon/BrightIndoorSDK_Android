@@ -5,5 +5,23 @@
     <string name="cancel">取消</string>
     <string name="done">确认</string>
     <string name="title_activity_search">搜索</string>
+    <string name="title_activity_tile">TileActivity</string>
+    <string name="title_activity_map_setting">MapSetting</string>
+    <string name="title_activity_map_operation">mapOperation</string>
+    <string name="title_activity_map_layers">MapLayers</string>
+    <string name="title_activity_oper_poi">OperPoi</string>
+    <string name="title_activity_oper_gesture">OperGesture</string>
+    <string name="title_activity_ctl_north">指北针</string>
+    <string name="title_activity_marker_image_text_point">MarkerImageTextPoint</string>
+    <string name="title_activity_marker_line">MarkerLine</string>
+    <string name="title_activity_marker_area">MarkerArea</string>
+    <string name="title_activity_marker_fence">MarkerFence</string>
+    <string name="title_activity_marker_follow">MarkerFollow</string>
+    <string name="title_activity_search_name">SearchName</string>
+    <string name="title_activity_search_distance">SearchDistance</string>
+    <string name="title_activity_route_distance">RouteDistance</string>
+    <string name="title_activity_route_hint">RouteHint</string>
+    <string name="title_activity_location_snap">LocationSnap</string>
+    <string name="title_activity_location_demo">导航示例</string>
 
 </resources>

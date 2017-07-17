@@ -55,8 +55,7 @@
             android:src="@drawable/route_arrow" />
         
     </RelativeLayout>
-    
-   
+
          <TextView
             android:id="@+id/btn_zoomin"
             android:visibility="invisible"

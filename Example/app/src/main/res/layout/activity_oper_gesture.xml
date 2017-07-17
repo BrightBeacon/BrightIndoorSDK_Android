@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/activity_map_view" />
+    <CheckBox
+        android:id="@+id/ck_pinch"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="116dp"
+        android:checked="false"/>
+    <TextView
+        android:id="@+id/btn_pinch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="禁止双指旋转"
+        android:layout_alignLeft="@id/ck_pinch"
+        android:layout_alignTop="@id/ck_pinch"
+        android:layout_marginLeft="20dp"/>
+
+    <CheckBox
+        android:id="@+id/ck_zoom"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="86dp"
+        android:layout_marginLeft="16dp"
+        android:checked="false" />
+    <TextView
+        android:id="@+id/btn_zoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="禁止缩放"
+        android:layout_alignLeft="@id/ck_zoom"
+        android:layout_alignTop="@id/ck_zoom"
+        android:layout_marginLeft="20dp"/>
+    <CheckBox
+        android:id="@+id/ck_pan"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="56dp"
+        android:layout_marginLeft="16dp"
+        android:checked="false"/>
+    <TextView
+        android:id="@+id/btn_pan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="禁止所有"
+        android:layout_alignLeft="@id/ck_pan"
+        android:layout_alignTop="@id/ck_pan"
+        android:layout_marginLeft="20dp"/>
+</RelativeLayout>

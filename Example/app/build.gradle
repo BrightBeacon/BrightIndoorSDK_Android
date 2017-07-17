@@ -2,18 +2,28 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    buildToolsVersion '26.0.0'
     defaultConfig {
         applicationId 'com.zs.brtmap.demo'
         minSdkVersion 18
-        targetSdkVersion 18
+        targetSdkVersion 22
         versionCode 1
-        versionName "1.0"
+        versionName "1.5.1"
+        ndk {
+            // 设置支持的 SO 库构架，一般而言，取你所有的库支持的构架的`交集`。
+            abiFilters 'armeabi', 'armeabi-v7a', 'x86'//, 'arm64-v8a', 'x86_64', 'mips', 'mips64'
+        }
     }
     buildTypes {
         release {
-            minifyEnabled false
+            debuggable false
+            minifyEnabled false  //删除没有用到的文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            minifyEnabled false
+            testCoverageEnabled false
         }
     }
     sourceSets {
@@ -27,10 +37,12 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    //    compile 'com.google.code.gson:gson:2.6.2'
-    compile files('libs/xutils3.jar')
+    compile files('libs/TYMapData.jar')
+    compile files('libs/TYBLELocationEngine-2.0.5.jar')
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
     testCompile 'junit:junit:4.12'
+    compile files('libs/TYTileSDK-2.0.0.jar')
+    compile files('libs/TYMapSDK-2.2.3.jar')
 }

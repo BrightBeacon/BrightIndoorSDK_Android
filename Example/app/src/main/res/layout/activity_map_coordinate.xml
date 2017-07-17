@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/activity_map_view" />
+    <TextView
+        android:id="@+id/text_coordinate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="坐标转换"/>
+</RelativeLayout>

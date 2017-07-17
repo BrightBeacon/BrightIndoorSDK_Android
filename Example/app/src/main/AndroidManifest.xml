@@ -5,38 +5,90 @@
     <!-- 定位扫描beacon用 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-
-    <!-- 拷贝数据到sd卡用 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <!-- 更新数据 -->
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- 拷贝数据到sd卡用，targetSdkVersion>=23需手动申请 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!--Android6.0 后蓝牙扫描需要微定位权限，targetSdkVersion>=23需手动申请-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
+
+        <!-- 定位需要服务 -->
+        <service android:name="com.ty.locationengine.ibeacon.BeaconService" />
+
         <activity android:name=".MenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapActivity" />
-        <activity android:name=".CalloutActivity" />
-        <activity android:name=".LayerActivity" />
-        <activity android:name=".RouteActivity" />
-        <activity android:name=".LocationActivity"/>
+        <activity android:name=".map.MapActivity" />
+        <activity android:name=".mark.CalloutActivity" />
+        <activity android:name=".route.RouteActivity" />
+        <activity android:name=".location.LocationActivity" />
         <activity
-            android:name=".searchActivity"
-            android:label="@string/title_activity_search"></activity>
-
-        <!-- 定位服务 -->
-        <service android:name="com.ty.locationengine.ibeacon.BeaconService" />
+            android:name=".search.SearchActivity"
+            android:label="@string/title_activity_search" />
+        <activity
+            android:name=".map.TileActivity"
+            android:label="@string/title_activity_tile" />
+        <activity
+            android:name=".map.MapSetting"
+            android:label="@string/title_activity_map_setting" />
+        <activity
+            android:name=".map.MapOperation"
+            android:label="@string/title_activity_map_operation" />
+        <activity
+            android:name=".map.MapLayers"
+            android:label="@string/title_activity_map_layers" />
+        <activity android:name=".map.MapCoordinate" />
+        <activity
+            android:name=".oper.OperPoi"
+            android:label="@string/title_activity_oper_poi" />
+        <activity
+            android:name=".oper.OperGesture"
+            android:label="@string/title_activity_oper_gesture" />
+        <activity
+            android:name=".ctl.CtlNorth"
+            android:label="@string/title_activity_ctl_north" />
+        <activity
+            android:name=".mark.MarkerImageTextPoint"
+            android:label="@string/title_activity_marker_image_text_point" />
+        <activity
+            android:name=".mark.MarkerLine"
+            android:label="@string/title_activity_marker_line" />
+        <activity
+            android:name=".mark.MarkerArea"
+            android:label="@string/title_activity_marker_area" />
+        <activity
+            android:name=".mark.MarkerFence"
+            android:label="@string/title_activity_marker_fence" />
+        <activity
+            android:name=".search.SearchCatorgery"
+            android:label="@string/title_activity_search_name" />
+        <activity
+            android:name=".search.SearchDistance"
+            android:label="@string/title_activity_search_distance" />
+        <activity
+            android:name=".route.RouteDistance"
+            android:label="@string/title_activity_route_distance" />
+        <activity
+            android:name=".route.RouteHint"
+            android:label="@string/title_activity_route_hint" />
+        <activity
+            android:name=".location.LocationSnap"
+            android:label="@string/title_activity_location_snap" />
+        <activity
+            android:name=".location.LocationDemo"
+            android:label="@string/title_activity_location_demo"></activity>
 
     </application>
 

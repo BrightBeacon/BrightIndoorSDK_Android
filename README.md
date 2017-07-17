@@ -5,8 +5,12 @@
 Eclipse版Demo->[室内开发包Eclipse](https://github.com/BrightBeacon/BrightIndoorSDK_Eclipse)
 
 ### 一、简介
-室内定位开发包是基于ArcGIS框架和GEOS几何计算开源库，为开发者提供了的室内地图显示、路径规划、室内定位等相关GIS功能。**本开发包支持的Android版本为18或更高** 
+室内定位开发包是基于GIS框架和GEOS几何计算开源库，为开发者提供了的室内地图显示、路径规划、室内定位等相关GIS功能。**本开发包支持的Android版本为18或更高，库架构支持'armeabi', 'armeabi-v7a', 'x86'** 
 ### 二、准备工作 
+下载本资源，目录结构：
+<br />Example/ 示例工程
+<br />Documents/ API文档
+<br />SDKs/ jar、so库和图标资源
 #### 2.1. 新建android工程，将SDKs/*.jar包和动态库so复制到项目的libs文件夹中,AndroidStudio需要在build.gradle中指定so库的位置信息,如下： 
 ```
 android { 
@@ -17,7 +21,7 @@ android {
     } 
 } 
 ```
-#### 2.2.复制地图设施图标到工程res下的drawable-hdpi文件夹 
+#### 2.2.复制SDKs/drawable-hdpi地图设施图标到工程res下的drawable-hdpi文件夹 
 
 ```
 资源图片在SDKs/drawable-hdpi
@@ -26,17 +30,21 @@ android {
 #### 3.1.配置AndroidManifest.xml所需权限
 
 ```
-	<!-- 拷贝数据到sd卡用 -->
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-	<!-- 更新数据 -->
-	<uses-permission android:name="android.permission.INTERNET" />
+    <!-- 在线更新数据 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 定位扫描beacon用 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+	<!-- 拷贝数据到sd卡用，targetSdkVersion>=23还需手动申请 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<!--Android6.0 后蓝牙扫描需要蓝牙定位权限：COARSE或者FINE均可，targetSdkVersion>=23还需手动申请-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<application>
-	//add your Activity
+	 <!-- add your Activity -->
   	 <!-- 扫描beacon服务 -->
    	 <service android:name="com.ty.locationengine.ibeacon.BeaconService" />
 	</application>
+	
 ```
 
 #### 3.2.新建actvity类，按需引人地图、定位支持库 
@@ -52,8 +60,8 @@ static {
 android:layout_width="match_parent"
 android:layout_height="match_parent" />
 ```
-#### 3.4.初始化mapView,代码详见BaseMapActivity.java 
-##### 1.设置地图数据保存在SD卡的位置，默认TYData
+#### 3.4.初始化mapView,代码详见BaseMapViewActivity.java 
+##### 1.初始化地图环境；并设置地图数据保存在SD卡的位置，默认为TYData
 
 ```
 TYMapEnvironment.initMapEnvironment(); 
@@ -67,7 +75,7 @@ mapView = (TYMapView) findViewById(R.id.map);
 //设置地图回调
 mapView.addMapListener(this); 
 //预设楼层
-mapView.setFloor("B1");
+mapView.setFloor("F1");
 //加载地图资源
 mapView.init(Constants.BUILDING_ID,Constants.APP_KEY); 申请appKey:(http://open.brtbeacon.com)
 ```
@@ -134,13 +142,13 @@ mapView.showRouteEndSymbolOnCurrentFloor(endPoint);
 ```
 
 ### 六、室内定位 
-#### 6.1. 添加蓝牙定位服务、相关权限见3.1 
-#### 6.2. 初始化定位引擎
+#### 6.1. 需要添加并申请蓝牙定位服务、相关权限见3.1 
+#### 6.2. 初始化定位引擎，添加回调类，并启动定位
+
 ```
 locationManager = new TYLocationManager(this, Constants.BUILDING_ID, Constants.APP_KEY);
 locationManager.addLocationEngineListener(this);
-BeaconRegion region = new BeaconRegion("demo",Constants.UUID,null,null);
-locationManager.setBeaconRegion(Arrays.asList(new BeaconRegion[]{region}));
+locationManager.startLocation();
 ```
 #### 6.3. 实现接口TYLocationManager.TYLocationManagerListener接口
 
@@ -167,7 +175,7 @@ public void didUpdateDeviceHeading(TYLocationManager arg0, double newHeading) {
 @Override
 public void didUpdateImmediateLocation(TYLocationManager arg0, TYLocalPoint arg1) {
 	//  *  位置更新事件回调，位置更新并返回新的位置结果。
-	// 与[TYLocationManager:didUpdateLocatin:]方法相近，此方法回调结果未融合计步器信息，灵敏度较高，适合用于行车场景下
+	// 与[TYLocationManager:didUpdateLocatin:]方法相近，此方法回调结果未融合设备传感器信息，灵敏度较高，适合用于行车场景下或传感器无效
 }
 
 @Override
@@ -178,7 +186,7 @@ public void didFailUpdateLocation(TYLocationManager tyLocationManager, Error err
 @Override
 public void didUpdateLocation(TYLocationManager arg0, TYLocalPoint newLocalPoint) {
 	//  位置更新事件回调，位置更新并返回新的位置结果。
-	//  与[TYLocationManager:didUpdateImmediationLocation:]方法相近，此方法回调结果融合计步器信息，稳定性较好，适合用于步行场景下。
+	//  与[TYLocationManager:didUpdateImmediationLocation:]方法相近，此方法回调结果融合设备传感器信息，稳定性较好，用于步行场景下。
 	Log.i(TAG, newLocalPoint.getX()+" "+newLocalPoint.getY());
 	mapView.showLocation(newLocalPoint);
 	//mapView.showRemainingRouteResultOnCurrentFloor(newLocalPoint);
