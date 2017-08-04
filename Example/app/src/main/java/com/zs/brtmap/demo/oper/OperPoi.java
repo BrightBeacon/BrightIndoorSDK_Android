@@ -49,7 +49,7 @@ public class OperPoi extends BaseMapViewActivity {
         hintLayer.removeAll();
         for (TYPoi poi:poiList) {
             //填充区域
-            hintLayer.addGraphic(new Graphic(poi.getGeometry(),new SimpleFillSymbol(Color.argb(100,255,255,255))));
+            hintLayer.addGraphic(new Graphic(poi.getGeometry(),new SimpleFillSymbol(Color.argb(100,0,255,255))));
             //添加边线
             hintLayer.addGraphic(new Graphic(poi.getGeometry(),new SimpleLineSymbol(Color.RED,2)));
 

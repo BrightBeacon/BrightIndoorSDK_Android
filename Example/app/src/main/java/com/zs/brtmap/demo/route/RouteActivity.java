@@ -3,10 +3,14 @@ package com.zs.brtmap.demo.route;
 import java.util.List;
 
 import com.esri.android.map.Callout;
+import com.esri.android.map.GraphicsLayer;
+import com.esri.android.map.GroupLayer;
 import com.esri.android.map.Layer;
 import com.esri.core.geometry.Envelope;
 import com.esri.core.geometry.GeometryEngine;
 import com.esri.core.geometry.Point;
+import com.esri.core.map.Graphic;
+import com.esri.core.symbol.SimpleFillSymbol;
 import com.ty.mapdata.TYLocalPoint;
 import com.ty.mapsdk.TYMapInfo;
 import com.ty.mapsdk.TYMapView;
@@ -20,7 +24,9 @@ import com.zs.brtmap.demo.BaseMapViewActivity;
 import com.zs.brtmap.demo.R;
 import com.zs.brtmap.demo.utils.Utils;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -97,12 +103,11 @@ public class RouteActivity extends BaseMapViewActivity implements TYOfflineRoute
 	@Override
 	public void onClickAtPoint(TYMapView mapView, Point mappoint) {
 
-		Layer layer = mapView.getLayer(0);
-		if (!GeometryEngine.contains(layer.getExtent(), mappoint, mapView.getSpatialReference())) {
+		TYPoi poi = mapView.extractRoomPoiOnCurrentFloor(mappoint.getX(),mappoint.getY());
+		if (poi == null) {
 			Utils.showToast(RouteActivity.this, "请选择地图范围内的点");
 			return;
 		}
-		TYPoi poi = mapView.extractRoomPoiOnCurrentFloor(mappoint.getX(),mappoint.getY());
 		String title = (poi.getName()!=null)?poi.getName():"未知道路";
 		mapCallout.setStyle(R.xml.callout_style);
 		mapCallout.setMaxWidth(Utils.dip2px(this,300));

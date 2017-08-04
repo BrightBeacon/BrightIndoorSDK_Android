@@ -7,6 +7,7 @@ import android.widget.SearchView;
 import com.esri.android.map.GraphicsLayer;
 import com.esri.core.geometry.Point;
 import com.esri.core.map.Graphic;
+import com.esri.core.renderer.SimpleRenderer;
 import com.ty.mapsdk.PoiEntity;
 import com.ty.mapsdk.TYMapInfo;
 import com.ty.mapsdk.TYMapView;
@@ -53,7 +54,6 @@ public class SearchActivity extends BaseMapViewActivity {
                 return false;
             }
         });
-
     }
 
     @Override
@@ -66,6 +66,7 @@ public class SearchActivity extends BaseMapViewActivity {
         super.mapViewDidLoad(mapView, error);
         if (error == null) {
             poiLayer = new GraphicsLayer();
+            poiLayer.setSelectionColor(Color.GREEN);//选中光环颜色（可选）
             mapView.addLayer(poiLayer);
         }
     }
@@ -102,6 +103,8 @@ public class SearchActivity extends BaseMapViewActivity {
         Point screenPoint = mapView.toScreenPoint(mappoint);
         int[] graphicIDs = poiLayer.getGraphicIDs((float) screenPoint.getX(), (float) screenPoint.getY(), 5);
         if (graphicIDs.length > 0) {
+            //添加选中效果；修改选中symbol
+            poiLayer.setSelectedGraphics(graphicIDs,true);
             poiLayer.updateGraphic(graphicIDs[0], getRedpinSymbol());
         }
 

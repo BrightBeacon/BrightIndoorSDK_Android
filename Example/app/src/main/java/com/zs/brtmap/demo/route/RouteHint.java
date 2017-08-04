@@ -16,6 +16,7 @@ import com.ty.mapsdk.TYMapInfo;
 import com.ty.mapsdk.TYMapView;
 import com.ty.mapsdk.TYOfflineRouteManager;
 import com.ty.mapsdk.TYPictureMarkerSymbol;
+import com.ty.mapsdk.TYPoi;
 import com.ty.mapsdk.TYRoutePart;
 import com.ty.mapsdk.TYRouteResult;
 import com.zs.brtmap.demo.BaseMapViewActivity;
@@ -87,9 +88,9 @@ public class RouteHint extends BaseMapViewActivity implements TYOfflineRouteMana
         //模拟过程中，不响应
         if (btnHint.isEnabled() == false) return;
 
-        Layer layer = mapView.getLayer(0);
-        if (!GeometryEngine.contains(layer.getExtent(), mappoint, mapView.getSpatialReference())) {
-            Utils.showToast(RouteHint.this, "请选择地图范围内的点");
+        TYPoi poi = mapView.extractRoomPoiOnCurrentFloor(mappoint.getX(),mappoint.getY());
+        if (poi == null) {
+            Utils.showToast(this, "请选择地图范围内的点");
             return;
         }
         startPoint = endPoint;

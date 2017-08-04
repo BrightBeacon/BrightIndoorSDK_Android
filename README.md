@@ -200,7 +200,7 @@ public void didUpdateLocation(TYLocationManager arg0, TYLocalPoint newLocalPoint
 <table>
 <thead>
 <tr>
-<th>No.</th>
+<th>Floor</th>
 <th>UUID </th>
 <th> Major </th>
 <th> Minor</th>
@@ -208,34 +208,40 @@ public void didUpdateLocation(TYLocationManager arg0, TYLocalPoint newLocalPoint
 </thead>
 <tbody>
 <tr>
-<td>区域1</td>
-<td rowspan＝'2'> FDA50693-A4E2-4FB1-AFCF-C6EB07647825 </td>
-<td> 10046  </td>
-<td> 11048</td>
+<td>F1</td>
+<td rowspan＝'2'> E2C56DB5-DFFB-48D2-B060-D0F5A71096E0 </td>
+<td> 10000  </td>
+<td> 11261 </td>
 </tr>
 <tr>
-<td>区域2</td>
-<td> FDA50693-A4E2-4FB1-AFCF-C6EB07647825 </td>
-<td> 10046  </td>
-<td> 11049</td>
+<td>F1</td>
+<td> E2C56DB5-DFFB-48D2-B060-D0F5A71096E0 </td>
+<td> 10000  </td>
+<td> 11262 </td>
 </tr>
 <tr>
-<td>区域3</td>
-<td> FDA50693-A4E2-4FB1-AFCF-C6EB07647825 </td>
-<td> 10046  </td>
-<td> 11050</td>
+<td>F1</td>
+<td> E2C56DB5-DFFB-48D2-B060-D0F5A71096E0 </td>
+<td> 10000  </td>
+<td> 11263 </td>
 </tr>
 <tr>
-<td>区域4</td>
-<td> FDA50693-A4E2-4FB1-AFCF-C6EB07647825 </td>
-<td> 10046  </td>
-<td> 11053</td>
+<td>F1</td>
+<td> E2C56DB5-DFFB-48D2-B060-D0F5A71096E0 </td>
+<td> 10000  </td>
+<td> 11264 </td>
 </tr>
 <tr>
-<td>区域5</td>
-<td> FDA50693-A4E2-4FB1-AFCF-C6EB07647825 </td>
-<td> 10046  </td>
-<td> 11055</td>
+<td>F2</td>
+<td> E2C56DB5-DFFB-48D2-B060-D0F5A71096E0 </td>
+<td> 10000  </td>
+<td> 11265 </td>
+</tr>
+<tr>
+<td>F2</td>
+<td> E2C56DB5-DFFB-48D2-B060-D0F5A71096E0 </td>
+<td> 10000  </td>
+<td> 11266 </td>
 </tr>
 </tbody>
 </table>

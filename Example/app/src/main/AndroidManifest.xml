@@ -41,8 +41,8 @@
             android:name=".map.TileActivity"
             android:label="@string/title_activity_tile" />
         <activity
-            android:name=".map.MapSetting"
-            android:label="@string/title_activity_map_setting" />
+            android:name=".map.MapInfo"
+            android:label="@string/title_activity_map_info" />
         <activity
             android:name=".map.MapOperation"
             android:label="@string/title_activity_map_operation" />

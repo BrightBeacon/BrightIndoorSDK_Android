@@ -204,12 +204,11 @@ public class LocationDemo extends BaseMapViewActivity implements View.OnClickLis
             return;
         }
 
-        Layer layer = mapView.getLayer(0);
-        if (!GeometryEngine.contains(layer.getExtent(), mappoint, mapView.getSpatialReference())) {
+        TYPoi poi = mapView.extractRoomPoiOnCurrentFloor(mappoint.getX(),mappoint.getY());
+        if (poi == null) {
             Utils.showToast(LocationDemo.this, "请选择地图范围内的点");
             return;
         }
-        TYPoi poi = mapView.extractRoomPoiOnCurrentFloor(mappoint.getX(),mappoint.getY());
         String title = (poi!=null&&poi.getName()!=null)?poi.getName():"未知道路";
         mapCallout.show(mappoint,loadCalloutView(title, mappoint));
     }

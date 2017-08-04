@@ -42,6 +42,14 @@ public class MarkerLine extends BaseMapViewActivity {
         testDrawLayer(mappoint);
     }
 
+    /**
+     * 连续绘制线演示
+     *
+     * Polyline.addSegment(line);是连笔绘制，保持所有线段间相连
+     * Polyline.lineTo(mappoint);提笔重新画，不相连会保持多线段
+     *
+     * @param mappoint
+     */
     private void testDrawLayer(Point mappoint) {
         if (drawLayer == null) {
             drawLayer = new GraphicsLayer();

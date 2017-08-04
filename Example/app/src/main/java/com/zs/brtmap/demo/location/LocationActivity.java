@@ -66,7 +66,7 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
                 } else {
                     locationManager.startUpdateLocation();
                     isShowLocation = true;
-                    Utils.showToast(LocationActivity.this, "开始定位，需配置定位设备。");
+                    Utils.showToast(LocationActivity.this, "开始定位，需配置定位设备。查看README.md。");
                     v.setBackground(getResources().getDrawable(R.drawable.btn_locate));
                 }
             }
@@ -170,7 +170,7 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
 
     @Override
     public void didUpdateDeviceHeading(TYLocationManager arg0, double newHeading) {
-        //如方位有误，尝试打开手机校准指南针。
+        //如方位有误，尝试打开手机校准指南针或提醒用户直接转8字。
         // 设备方向改变事件回调。结合地图MapMode可以处理地图自动旋转，或箭头方向功能。
         //mapView.setMapMode(TYMapViewMode.TYMapViewModeDefault);
 //		mapView.setMapMode(TYMapView.TYMapViewMode.TYMapViewModeFollowing);
@@ -207,6 +207,7 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //定位必须停止
         if (locationManager != null)
             locationManager.stopUpdateLocation();
     }

@@ -80,10 +80,10 @@ public class MarkerImageTextPoint extends BaseMapViewActivity implements View.On
             Graphic graphic = hintLayer.getGraphic(gids[0]);
             mapCallout = mapView.getCallout();
             mapCallout.setStyle(R.xml.callout_style);
-            mapCallout.setMaxWidth(500);
-            mapCallout.setMaxHeight(300);
+            mapCallout.setMaxWidthDp(320);
+            mapCallout.setMaxHeightDp(320);
             mapCallout.setOffset(0, -15);
-            mapCallout.show(mappoint, loadCalloutView((String) graphic.getAttributeValue("name"),"副标题"));
+            mapCallout.show((Point) graphic.getGeometry(), loadCalloutView((String) graphic.getAttributeValue("name"),"副标题"));
         }
     }
 

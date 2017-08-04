@@ -38,6 +38,7 @@ public class MapActivity extends BaseMapViewActivity {
 	public void onClickAtPoint(TYMapView mapView, Point mappoint) {
 		Log.i(TAG, "Clicked Point: " + mappoint.getX() + ", " +  mappoint.getY());
 
+		//根据x,y获取本层房间POI
 		TYPoi poi = mapView.extractRoomPoiOnCurrentFloor(mappoint.getX(),
 				mappoint.getY());
 		if (poi != null) {

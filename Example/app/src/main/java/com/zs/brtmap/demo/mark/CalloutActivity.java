@@ -44,11 +44,10 @@ public class CalloutActivity extends BaseMapViewActivity {
 	public void onClickAtPoint(TYMapView mapView, Point mappoint) {
 		Log.i(TAG, "onClickAtPoint: " + mappoint);
 		TYPoi poi = mapView.extractRoomPoiOnCurrentFloor(mappoint.getX(), mappoint.getY());
-		if (poi == null) {
-			Log.i(TAG, "poi: " + null);
-		} else {
-			Log.i(TAG, "poi: " + poi);
+		if (poi != null) {
+			Log.i(TAG, "点击到poi: " + poi);
 		}
+
 		mapCallout.hide();
 	}
 
@@ -106,7 +105,7 @@ public class CalloutActivity extends BaseMapViewActivity {
 
 			mapCallout.setStyle(R.xml.callout_style);
 			mapCallout.setMaxWidthDp(300);
-			mapCallout.setMaxHeightDp(500);
+			mapCallout.setMaxHeightDp(300);
 			mapCallout.setContent(loadCalloutView(title, detail));
 			mapCallout.show(location);
 		}
