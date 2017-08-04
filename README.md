@@ -195,7 +195,7 @@ public void didUpdateLocation(TYLocationManager arg0, TYLocalPoint newLocalPoint
 ### 七、示例工程演示定位（不支持模拟器）
 
 #### 配置示例工程演示定位 
-使用与地图数据配套的iBeacon设备部署方案，才可以实现室内地图定位。 配置导航的beacon信息,[请下载配置端BrightBeacon](http://app.brtbeacon.com) 示例地图，需要准备5个iBeacon设备；配置参数列表如下：
+使用与地图数据配套的iBeacon设备部署方案，才可以实现室内地图定位。 配置导航的beacon信息,[请下载配置端BrightBeacon](http://app.brtbeacon.com) 示例地图，需要准备6个iBeacon设备；配置参数列表如下：
 
 <table>
 <thead>
