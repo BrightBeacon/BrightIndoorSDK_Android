@@ -249,7 +249,7 @@ public void didUpdateLocation(TYLocationManager arg0, TYLocalPoint newLocalPoint
 ### 八、使用你的地图
 
 #### 获取你的地图参数 
-①前往开放平台h[开放平台http://open.brtbeacon.com](http://open.brtbeacon.com)并登录
+①前往开放平台[开放平台http://open.brtbeacon.com](http://open.brtbeacon.com)并登录
 
 ②首次注册用户需创建【应用AppKey】，即可申请地图
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.esri.core.geometry.Point;
 import com.ty.mapsdk.TYMapEnvironment;
+import com.ty.statistic.TYStatistic;
 import com.zs.brtmap.demo.adapter.FloorListAdapter;
 import com.ty.mapsdk.TYMapInfo;
 import com.ty.mapsdk.TYMapView;

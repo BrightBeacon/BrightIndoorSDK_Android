@@ -122,7 +122,7 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
         textView.setText(title);
         Callout callout = mapView.getCallout();
         callout.setStyle(R.xml.callout_style);
-        callout.setMaxWidthDp(500);
+        callout.setMaxWidthDp(300);
         callout.setMaxHeightDp(300);
         callout.setContent(textView);
         callout.show(mappoint);
