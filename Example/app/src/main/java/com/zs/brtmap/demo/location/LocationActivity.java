@@ -52,6 +52,8 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
 
         locationManager = new TYLocationManager(this, Constants.BUILDING_ID, Constants.APP_KEY);
         locationManager.addLocationEngineListener(this);
+        //是否启用热力数据
+        locationManager.enableHeatData(true);
 
         TextView btnLocation = (TextView) findViewById(R.id.show_location);
         btnLocation.setOnClickListener(new View.OnClickListener() {
