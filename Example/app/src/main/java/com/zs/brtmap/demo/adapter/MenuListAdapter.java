@@ -25,7 +25,7 @@ public class MenuListAdapter extends BaseExpandableListAdapter {
 	private String[] mapctl = { "· 指北针"};
 	private String[] mapmark = { "· 图文点标注", "· 线标注", "· 形状标注","· 展示弹窗","· 围栏示例"};
 	private String[] mapsearch = { "· 名称搜索", "· 设施搜索", "· 距离搜索" };
-	private String[] maproute = { "· 路径规划", "· 距离计算", "· 路径提示" };
+	private String[] maproute = { "· 路径规划", "· 距离计算", "· 路径提示" ,"· 设施禁行" , "· 仅路径" };
 	private String[] mapnav = { "· 开始定位", "· 定位吸附", "· 导航示例" };
 
 	private List<String> groupList = null;

@@ -6,12 +6,12 @@ android {
     defaultConfig {
         applicationId 'com.zs.brtmap.demo'
         minSdkVersion 18
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
-        versionName "1.5.1"
+        versionName "1.5.4"
         ndk {
             // 设置支持的 SO 库构架，一般而言，取你所有的库支持的构架的`交集`。
-            abiFilters 'armeabi', 'armeabi-v7a', 'x86'//, 'arm64-v8a', 'x86_64', 'mips', 'mips64'
+            abiFilters 'armeabi-v7a'//,'armeabi', 'x86', 'arm64-v8a', 'x86_64', 'mips', 'mips64'
         }
     }
     buildTypes {
@@ -38,12 +38,11 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/TYMapData.jar')
+    compile files('libs/TYTileSDK-2.0.0.jar')
+    compile files('libs/TYBLELocationEngine-2.0.6.jar')
+    compile files('libs/TYMapSDK-2.2.6.jar')
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
-
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
     testCompile 'junit:junit:4.12'
-    compile files('libs/TYTileSDK-2.0.0.jar')
-    compile files('libs/TYMapSDK-2.2.4.jar')
-    compile files('libs/TYBLELocationEngine-2.0.6.jar')
 }

@@ -24,6 +24,7 @@ import com.zs.brtmap.demo.utils.Constants;
 import com.zs.brtmap.demo.utils.Utils;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -52,6 +53,14 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
 
         locationManager = new TYLocationManager(this, Constants.BUILDING_ID, Constants.APP_KEY);
         locationManager.addLocationEngineListener(this);
+
+        //按需控制定位设备个数
+        locationManager.setLimitBeaconNumber(true);
+        locationManager.setMaxBeaconNumberForProcessing(5);
+
+        //控制所有信号很弱<-80,定位失败
+        locationManager.setRssiThreshold(-80);
+
         //是否启用热力数据
         locationManager.enableHeatData(true);
 
@@ -108,6 +117,9 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
         if (locLayer == null) {
             locLayer = new GraphicsLayer();
             mapView.addLayer(locLayer);
+
+            TYPictureMarkerSymbol pms  = new TYPictureMarkerSymbol(getResources().getDrawable(R.drawable.location_arrow));
+            mapView.setLocationSymbol(pms);
         }
     }
 
@@ -188,7 +200,7 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
             mapView.setFloor(TYMapInfo.searchMapInfoFromArray(mapView.allMapInfo(), newLocalPoint.getFloor()));
             return;
         }
-        if (picIndex == 0) animateLocationSymbol();
+//        if (picIndex == 0) animateLocationSymbol();
         mapView.showLocation(newLocalPoint);
     }
     @Override

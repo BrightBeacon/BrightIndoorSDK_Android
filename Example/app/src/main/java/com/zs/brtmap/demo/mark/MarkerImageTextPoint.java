@@ -60,11 +60,11 @@ public class MarkerImageTextPoint extends BaseMapViewActivity implements View.On
     public void mapViewDidLoad(TYMapView mapView, Error error) {
         super.mapViewDidLoad(mapView, error);
         if (error == null) {
-            //GraphicsLayer.RenderingMode.DYNAMIC 地图旋转时，内容保持不动
             hintLayer = new GraphicsLayer(GraphicsLayer.RenderingMode.STATIC);
             mapView.addLayer(hintLayer);
 
-            rotateLayer = new GraphicsLayer(GraphicsLayer.RenderingMode.DYNAMIC);
+            //GraphicsLayer.RenderingMode.DYNAMIC 地图旋转时，内容保持不动,默认行为
+            rotateLayer = new GraphicsLayer();
             mapView.addLayer(rotateLayer);
         }
     }

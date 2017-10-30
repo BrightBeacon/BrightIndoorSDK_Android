@@ -101,7 +101,7 @@ public class CalloutActivity extends BaseMapViewActivity {
 			Log.i(TAG, location.toString());
 
 			String title = poi.getName();
-			String detail = poi.getPoiID();
+			String detail = "类别："+poi.getCategoryID();
 
 			mapCallout.setStyle(R.xml.callout_style);
 			mapCallout.setMaxWidthDp(300);

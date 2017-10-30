@@ -26,7 +26,9 @@ import com.zs.brtmap.demo.oper.OperGesture;
 import com.zs.brtmap.demo.oper.OperPoi;
 import com.zs.brtmap.demo.route.RouteActivity;
 import com.zs.brtmap.demo.route.RouteDistance;
+import com.zs.brtmap.demo.route.RouteForbidden;
 import com.zs.brtmap.demo.route.RouteHint;
+import com.zs.brtmap.demo.route.RouteOnly;
 import com.zs.brtmap.demo.search.SearchActivity;
 import com.zs.brtmap.demo.search.SearchCatorgery;
 import com.zs.brtmap.demo.search.SearchDistance;
@@ -129,6 +131,12 @@ public class MenuActivity extends Activity {
                             break;
                         case 2:
                             intent = new Intent(MenuActivity.this, RouteHint.class);
+                            break;
+                        case 3:
+                            intent = new Intent(MenuActivity.this, RouteForbidden.class);
+                            break;
+                        case 4:
+                            intent = new Intent(MenuActivity.this, RouteOnly.class);
                             break;
                     }
                 }else if (groupPosition == 6) {

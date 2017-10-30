@@ -1,15 +1,18 @@
 package com.zs.brtmap.demo.location;
 
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.esri.android.map.Callout;
-import com.esri.android.map.Layer;
 import com.esri.android.map.event.OnPinchListener;
-import com.esri.core.geometry.GeometryEngine;
 import com.esri.core.geometry.Point;
 import com.ty.locationengine.ble.TYBeacon;
 import com.ty.locationengine.ble.TYLocationManager;
@@ -29,7 +32,9 @@ import com.zs.brtmap.demo.R;
 import com.zs.brtmap.demo.utils.Constants;
 import com.zs.brtmap.demo.utils.Utils;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 public class LocationDemo extends BaseMapViewActivity implements View.OnClickListener,TYLocationManagerListener, TYOfflineRouteManager.TYOfflineRouteManagerListener {
 
@@ -43,6 +48,9 @@ public class LocationDemo extends BaseMapViewActivity implements View.OnClickLis
     boolean isRouting;
 
     Callout mapCallout;
+    //音频播放控件
+    private MediaPlayer player;
+    private int poiID = -1;
 
     static {
         System.loadLibrary("TYMapSDK");
@@ -200,6 +208,7 @@ public class LocationDemo extends BaseMapViewActivity implements View.OnClickLis
         super.onClickAtPoint(mapView, mappoint);
 
         if (isRouting) {
+            Toast.makeText(this,"路径已规划，点击模拟定位点",Toast.LENGTH_SHORT).show();
             didUpdateLocation(null,new TYLocalPoint(mappoint.getX(),mappoint.getY(),mapView.getCurrentMapInfo().getFloorNumber()));
             return;
         }
@@ -280,6 +289,8 @@ public class LocationDemo extends BaseMapViewActivity implements View.OnClickLis
     @Override
     public void didUpdateLocation(TYLocationManager tyLocationManager, TYLocalPoint tyLocalPoint) {
 
+        playAudioForPoi(tyLocalPoint);
+
         //自动切换到定位楼层
         if (tyLocalPoint.getFloor() != mapView.currentMapInfo.getFloorNumber()) {
             mapView.setFloor(tyLocalPoint.getFloor()+"");
@@ -314,7 +325,7 @@ public class LocationDemo extends BaseMapViewActivity implements View.OnClickLis
             List<TYDirectionalHint> hints = mapView.getRouteResult().getRouteDirectionalHint(part);
             TYDirectionalHint hint = mapView.getRouteResult().getDirectionalHintForLocationFromHints(tyLocalPoint,hints);
             if (hint != null){
-                mapView.showRouteHint(hint,false);
+//                mapView.showRouteHint(hint,false);
                 tips = "剩余：" + String.format("%.2f", mapView.getRouteResult().distanceToRouteEnd(tyLocalPoint))
                         + "(" + String.format("%.2f", mapView.getRouteResult().length)+")"+"\n"+hint.getDirectionString();
                 mapView.setRotationAngle(hint.getCurrentAngle(),true);
@@ -360,5 +371,58 @@ public class LocationDemo extends BaseMapViewActivity implements View.OnClickLis
     public void didFailSolveRouteWithError(TYOfflineRouteManager tyOfflineRouteManager, Exception e) {
         isRouting = false;
         Utils.showToast(this,"未找到路线");
+    }
+
+    private void playAudioForPoi(TYLocalPoint lp) {
+        TYPoi poi = mapView.extractRoomPoiOnCurrentFloor(lp.getX(),lp.getY());
+        if (poi != null) {
+            Log.e(TAG,poi.getPoiID());
+            /*
+            String poiID = poi.getPoiID();
+            //和上次poiID相同，不切换保持播放
+            if(!poiID.equals(lastPoiID)){
+               player(poiID.mp3);
+               lastPoiID = poiID;
+            }
+            */
+            //此处仅做演示，随机播放提示语音，实际处理应如上播放poi.getPoiID()相对应的音频文件。
+            int rand = new Random().nextInt(2);
+            if (poiID != rand) {
+                player(rand == 0 ? "changbai.mp3" : rand == 1 ? "taishan.mp3" : "farewell.mp3");
+                poiID = rand;
+            }
+        }
+    }
+
+    /**
+     * 播放音频文件
+     *
+     * @param path
+     */
+    private void player(String path) {
+        AssetManager am = getAssets();
+        try {
+            AssetFileDescriptor afd = am.openFd(path);
+            if (afd != null) {
+                if (player != null) player.stop();
+                player = new MediaPlayer();
+                player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                player.prepare();
+                player.start();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (player != null) player.stop();
+        if (locationManager != null) {
+            locationManager.removeLocationEngineListener(this);//移除定位引擎的回调监听
+            locationManager.stopUpdateLocation();//停止定位引擎
+            locationManager = null;
+        }
     }
 }

@@ -2,58 +2,13 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/libs/TYMapSDK-2.2.4.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="26.0.0"
-        sha1="4c8b7c78b586a7225d2be01d7a93d65349745511">
-        <dex dex="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/build/intermediates/transforms/dex/debug/folders/1000/2/TYMapSDK-2.2.4_ccce85970ff5e31fb87768984781d0a08c88f449/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/libs/TYBLELocationEngine-2.0.6.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="26.0.0"
-        sha1="9908118986b6cfcbfe758153b3bfb3ad506df8ef">
-        <dex dex="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/build/intermediates/transforms/dex/debug/folders/1000/2/TYBLELocationEngine-2.0.6_76bdac2a0798f58a366a128117e9f9e3d9e58608/classes.dex" />
-    </item>
-    <item
         is-multidex="false"
         jar="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/libs/TYBLELocationEngine-2.0.6.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.0"
-        sha1="9908118986b6cfcbfe758153b3bfb3ad506df8ef">
+        sha1="c3df21445171d16f97d086b2c6babc73e0d4bc87">
         <dex dex="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/build/intermediates/pre-dexed/debug/TYBLELocationEngine-2.0.6_76bdac2a0798f58a366a128117e9f9e3d9e58608.jar" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="26.0.0"
-        sha1="fa1be230e95507c7bbc3d2c40b1ba8a0f68fb602">
-        <dex dex="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_3e5f215f3caa58ebab87b10b4c7f41c978f15803/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/libs/arcgis-android-api.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="26.0.0"
-        sha1="e9f08b1bc6bc8f7c3a60b9b0e92e102bcf040e7c">
-        <dex dex="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/build/intermediates/transforms/dex/debug/folders/1000/2/arcgis-android-api_f817c93bdacab9afa19ec41c3bcae58b1821cc04/classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/libs/arcgis-android-api.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.0"
-        sha1="e9f08b1bc6bc8f7c3a60b9b0e92e102bcf040e7c">
-        <dex dex="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/build/intermediates/pre-dexed/debug/arcgis-android-api_f817c93bdacab9afa19ec41c3bcae58b1821cc04.jar" />
     </item>
     <item
         is-multidex="false"
@@ -66,6 +21,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/libs/TYMapSDK-2.2.6.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="105e5279c2a58b65490281513fd7e52b769e36b5">
+        <dex dex="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/build/intermediates/pre-dexed/debug/TYMapSDK-2.2.6_9ecabeabdbbd7f5858b7681d658197452f39d363.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/libs/jackson-all-1.9.0.jar"
         jumboMode="false"
         optimize="true"
@@ -74,49 +38,13 @@
         <dex dex="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/build/intermediates/pre-dexed/debug/jackson-all-1.9.0_71bda56a18036764407178e706bc92dace3ca2fb.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/libs/TYMapData.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="26.0.0"
-        sha1="0a416de04a532b9f10e3cd16ab2a3180748d8f75">
-        <dex dex="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/build/intermediates/transforms/dex/debug/folders/1000/2/TYMapData_6f53ad9a5984356220155f39ab01631c4ad6da75/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/libs/TYTileSDK-2.0.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="26.0.0"
-        sha1="8f8b46a0c1dbd914cfceb61d70017358140e0cdc">
-        <dex dex="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/build/intermediates/transforms/dex/debug/folders/1000/2/TYTileSDK-2.0.0_dffbb45faeaf5e72bfef69ba38dfb8069cc8e74a/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/libs/jackson-all-1.9.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="26.0.0"
-        sha1="b9c011c6e816af0eb462770d92a278b728071d31">
-        <dex dex="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/build/intermediates/transforms/dex/debug/folders/1000/2/jackson-all-1.9.0_71bda56a18036764407178e706bc92dace3ca2fb/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="26.0.0"
-        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
-        <dex dex="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_b8ecabc4652ced170c20f5de2c3b51accfd4fcd3/classes.dex" />
-    </item>
-    <item
         is-multidex="false"
-        jar="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/libs/TYMapSDK-2.2.4.jar"
+        jar="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/libs/arcgis-android-api.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.0"
-        sha1="4c8b7c78b586a7225d2be01d7a93d65349745511">
-        <dex dex="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/build/intermediates/pre-dexed/debug/TYMapSDK-2.2.4_ccce85970ff5e31fb87768984781d0a08c88f449.jar" />
+        sha1="e9f08b1bc6bc8f7c3a60b9b0e92e102bcf040e7c">
+        <dex dex="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/build/intermediates/pre-dexed/debug/arcgis-android-api_f817c93bdacab9afa19ec41c3bcae58b1821cc04.jar" />
     </item>
     <item
         is-multidex="false"
@@ -124,7 +52,7 @@
         jumboMode="false"
         optimize="true"
         revision="26.0.0"
-        sha1="0a416de04a532b9f10e3cd16ab2a3180748d8f75">
+        sha1="889a9b3ffbc7609b33af1162881e31263971bb5c">
         <dex dex="/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/build/intermediates/pre-dexed/debug/TYMapData_6f53ad9a5984356220155f39ab01631c4ad6da75.jar" />
     </item>
 

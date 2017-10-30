@@ -2,18 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zs.brtmap.demo">
 
+    <!-- 更新数据 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <!-- 定位扫描beacon用 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <!-- 更新数据 -->
-    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <!-- 拷贝数据到sd卡用，targetSdkVersion>=23需手动申请 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <!--Android6.0 后蓝牙扫描需要微定位权限，targetSdkVersion>=23需手动申请-->
+    <!-- Android6.0 后蓝牙扫描需要微定位权限，targetSdkVersion>=23需手动申请 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
 
     <application
         android:allowBackup="true"
@@ -27,6 +28,7 @@
         <activity android:name=".MenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -88,8 +90,13 @@
             android:label="@string/title_activity_location_snap" />
         <activity
             android:name=".location.LocationDemo"
-            android:label="@string/title_activity_location_demo"></activity>
-
+            android:label="@string/title_activity_location_demo" />
+        <activity
+            android:name=".route.RouteOnly"
+            android:label="@string/title_activity_route_only" />
+        <activity
+            android:name=".route.RouteForbidden"
+            android:label="@string/title_activity_route_forbidden"></activity>
     </application>
 
 </manifest>
