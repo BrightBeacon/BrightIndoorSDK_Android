@@ -15,6 +15,7 @@ import com.zs.brtmap.demo.map.MapActivity;
 import com.zs.brtmap.demo.map.MapCoordinate;
 import com.zs.brtmap.demo.map.MapInfo;
 import com.zs.brtmap.demo.map.MapLayers;
+import com.zs.brtmap.demo.map.MapLocalActivity;
 import com.zs.brtmap.demo.map.MapOperation;
 import com.zs.brtmap.demo.map.TileActivity;
 import com.zs.brtmap.demo.mark.CalloutActivity;
@@ -73,6 +74,9 @@ public class MenuActivity extends Activity {
                             intent = new Intent(MenuActivity.this,MapCoordinate.class);
                             break;
                         case 5:
+                            intent = new Intent(MenuActivity.this,MapLocalActivity.class);
+                            break;
+                        case 6:
                             intent = new Intent(MenuActivity.this,TileActivity.class);
                             break;
                     }

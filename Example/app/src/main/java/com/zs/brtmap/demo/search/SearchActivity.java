@@ -2,6 +2,7 @@ package com.zs.brtmap.demo.search;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.SearchView;
 
 import com.esri.android.map.GraphicsLayer;
@@ -29,7 +30,7 @@ public class SearchActivity extends BaseMapViewActivity {
 
     static {
         System.loadLibrary("TYMapSDK");
-        // System.loadLibrary("TYLocationEngine");
+        //System.loadLibrary("TYLocationEngine");
     }
 
     @Override
@@ -118,6 +119,7 @@ public class SearchActivity extends BaseMapViewActivity {
             Graphic graphic = new Graphic(point, getGreenpinSymbol());
             poiLayer.addGraphic(graphic);
 
+            Log.e(TAG,entity.toString());
             //文字添加方式
 //            TYTextSymbol textSymbol = new TYTextSymbol(this,15, entity.getName(), Color.BLACK);
 //            textSymbol.setOffsetX(-5);

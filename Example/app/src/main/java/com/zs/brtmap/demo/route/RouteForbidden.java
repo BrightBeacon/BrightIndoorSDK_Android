@@ -39,7 +39,6 @@ public class RouteForbidden extends BaseMapViewActivity implements TYOfflineRout
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         ck_forbidden = (CheckBox) findViewById(R.id.checkbox);
         ck_forbidden.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

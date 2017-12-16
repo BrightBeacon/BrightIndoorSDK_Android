@@ -1,6 +1,7 @@
 package com.zs.brtmap.demo;
 
 import java.util.List;
+import java.util.Locale;
 
 import com.esri.core.geometry.Point;
 import com.ty.mapsdk.TYMapEnvironment;
@@ -15,7 +16,10 @@ import com.zs.brtmap.demo.utils.Utils;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -44,6 +48,18 @@ public abstract class BaseMapViewActivity extends Activity
 
     public int contentViewID;
 
+    Locale mCurLocale = null;
+
+    Resources getResourcesByLocale( Resources res, String localeName ) {
+        Configuration conf = new Configuration(res.getConfiguration());
+        conf.locale = new Locale(localeName);
+        return new Resources(res.getAssets(), res.getDisplayMetrics(), conf);
+    }
+    private void resetLocale(Resources res){
+        Configuration conf = new Configuration(res.getConfiguration());
+        conf.locale = mCurLocale;
+        new Resources(res.getAssets(), res.getDisplayMetrics(), conf);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +80,12 @@ public abstract class BaseMapViewActivity extends Activity
         //初始化建筑数据，授权appKey
         mapView.init(Constants.BUILDING_ID, Constants.APP_KEY);
 
+        //请求定位相关权限
         checkPermission();
+    }
+
+    private void onPermissionGranted() {
+        //开始定位等操作
     }
 
     // 仅用于本例子类设置界面元素
@@ -222,15 +243,24 @@ public abstract class BaseMapViewActivity extends Activity
 
 
     private void checkPermission() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(getApplicationContext(), "没有权限,请手动开启定位权限", Toast.LENGTH_SHORT).show();
-            // 申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义）
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE}, BLE_LOCATION_STATE);
-        }else {
-            //已有权限
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//判断当前系统的SDK版本是否大于23
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED
+                    || ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                //第一次请求权限的时候返回false,第二次shouldShowRequestPermissionRationale返回true
+                //如果用户选择了“不再提醒”永远返回false。
+                if (shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_COARSE_LOCATION)){
+                    Toast.makeText(this, "需要开启蓝牙定位权限，才能进行室内定位导航", Toast.LENGTH_LONG).show();
+                    // 申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义）
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE}, BLE_LOCATION_STATE);
+                }else{
+                    Toast.makeText(getApplicationContext(), "无法请求权限,请手动前往设置开启蓝牙定位权限", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                //已有权限
+                onPermissionGranted();
+            }
         }
     }
     //Android6.0申请权限的回调方法
@@ -238,13 +268,14 @@ public abstract class BaseMapViewActivity extends Activity
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            // requestCode即所声明的权限获取码，在checkSelfPermission时传入
+            // requestCode即所声明的权限获取码，在requestPermissions时传入
             case BLE_LOCATION_STATE:
                 if (grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // 获取到权限，作相应处理（调用定位SDK应当确保相关权限均被授权，否则可能引起定位失败）
+                    onPermissionGranted();
                 } else {
                     // 没有获取到权限，做特殊处理
-                    Toast.makeText(getApplicationContext(), "获取位置权限失败，请手动开启", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "获取位置权限失败，请手动前往设置开启", Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:

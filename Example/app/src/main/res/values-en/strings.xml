@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Indoor Demo</string>
+    <string name="H8520003G0100001">Cancel</string>
+    <string name="done">OK</string>
+    <string name="title_activity_search">Search</string>
+    <string name="title_activity_tile">Tile</string>
+    <string name="title_activity_map_info">Info</string>
+    <string name="title_activity_map_operation">Operation</string>
+    <string name="title_activity_map_layers">Layers</string>
+    <string name="title_activity_oper_poi">POI</string>
+    <string name="title_activity_oper_gesture">Gesture</string>
+    <string name="title_activity_ctl_north">North</string>
+    <string name="title_activity_marker_image_text_point">Marker</string>
+    <string name="title_activity_marker_line">Line</string>
+    <string name="title_activity_marker_area">Region</string>
+    <string name="title_activity_marker_fence">Fence</string>
+    <string name="title_activity_search_name">Search Name</string>
+    <string name="title_activity_search_distance">Search In Area</string>
+    <string name="title_activity_route_distance">Route Distance</string>
+    <string name="title_activity_route_hint">Route Hint</string>
+    <string name="title_activity_location_snap">Location Snap</string>
+    <string name="title_activity_location_demo">Navigation</string>
+    <string name="title_activity_route_only">RouteOnly</string>
+    <string name="title_activity_route_forbidden">RouteForbidden</string><string name="S00210109F0120001">Desktop</string>
+    <string name="S00210109F0120002">Desktop</string>
+    <string name="S00210109F0120003">Desktop</string>
+    <string name="S00210109F0120004">Desktop</string>
+    <string name="S00210109F0120005">Desktop</string>
+    <string name="S00210109F0120006">Desktop</string>
+    <string name="S00210109F0120007">Desktop</string>
+    <string name="S00210109F0120008">Desktop</string>
+    <string name="S00210109F0120009">Desktop</string>
+    <string name="S00210109F0120010">Desktop</string>
+    <string name="S00210109F0120011">Desktop</string>
+    <string name="S00210109F0120012">Desktop</string>
+    <string name="S00210109F0120013">Desktop</string>
+    <string name="S00210109F0120014">Desktop</string>
+    <string name="S00210109F0120015">Desktop</string>
+</resources>

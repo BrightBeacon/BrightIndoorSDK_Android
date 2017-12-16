@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
-
     <!-- 拷贝数据到sd卡用，targetSdkVersion>=23需手动申请 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -96,7 +95,8 @@
             android:label="@string/title_activity_route_only" />
         <activity
             android:name=".route.RouteForbidden"
-            android:label="@string/title_activity_route_forbidden"></activity>
+            android:label="@string/title_activity_route_forbidden" />
+        <activity android:name=".map.MapLocalActivity"></activity>
     </application>
 
 </manifest>

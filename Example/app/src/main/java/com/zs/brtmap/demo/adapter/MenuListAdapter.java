@@ -20,7 +20,7 @@ public class MenuListAdapter extends BaseExpandableListAdapter {
 	private Context mContext = null;
 
 	private String[] groups = { "显示地图","地图事件", "地图控件", "标注弹窗","POI搜索","路径规划","导航" };
-	private String[] basemap = { "· 基础地图", "· 地图信息", "· 地图操作","· 图层控制","· 坐标转换","· 瓦片地图" };
+	private String[] basemap = { "· 基础地图", "· 地图信息", "· 地图操作","· 图层控制","· 坐标转换","· 地图本地化","· 瓦片地图" };
 	private String[] mapoper = { "· 拾取POI", "· 手势控制" };
 	private String[] mapctl = { "· 指北针"};
 	private String[] mapmark = { "· 图文点标注", "· 线标注", "· 形状标注","· 展示弹窗","· 围栏示例"};
