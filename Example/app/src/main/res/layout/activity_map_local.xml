@@ -5,7 +5,7 @@
     <include layout="@layout/activity_map_view" />
     <TextView
         android:id="@+id/text_info"
-        android:text="提示：自定义语言切换"
+        android:text="提示：自定义语言切换,需配置values-语种/strings.xml"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
