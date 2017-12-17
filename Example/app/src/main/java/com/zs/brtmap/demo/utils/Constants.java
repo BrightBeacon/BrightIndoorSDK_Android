@@ -7,5 +7,5 @@ public class Constants {
 	 public static final String BUILDING_ID = "ZS030002";
 	public static final String APP_KEY = "ZSYSJZ83ce7c4cf094cd17d170b3d880";
 	 //**********************************以上必须修改***********************************
-	
+
 }
