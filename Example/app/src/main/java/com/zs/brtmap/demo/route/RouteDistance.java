@@ -7,7 +7,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.esri.android.map.Callout;
+import com.esri.core.geometry.Geometry;
+import com.esri.core.geometry.GeometryEngine;
 import com.esri.core.geometry.Point;
+import com.esri.core.geometry.Polygon;
 import com.ty.mapdata.TYLocalPoint;
 import com.ty.mapsdk.TYMapInfo;
 import com.ty.mapsdk.TYMapView;
@@ -89,8 +92,20 @@ public class RouteDistance extends BaseMapViewActivity implements TYOfflineRoute
         super.onClickAtPoint(mapView, mappoint);
 
         TYPoi poi = mapView.extractRoomPoiOnCurrentFloor(mappoint.getX(),mappoint.getY());
+        if (poi == null) {
+            Utils.showToast(this, "请选择地图范围内的区域");
+            return;
+        }
+        Point centerPt = null;
+        Geometry geom = poi.getGeometry();
+        if (geom instanceof Polygon) {
+            //获取标点
+            centerPt = GeometryEngine.getLabelPointForPolygon((Polygon)geom,mapView.getSpatialReference());
+        }else {
+            centerPt = (Point)geom;
+        }
         String name = (poi==null||poi.getName()==null)?"未知点":poi.getName();
-        mapCallout.animatedShow(mappoint,loadCalloutView(name,mappoint));
+        mapCallout.animatedShow(mappoint,loadCalloutView(name,centerPt));
     }
 
     // 加载自定义弹出框内容

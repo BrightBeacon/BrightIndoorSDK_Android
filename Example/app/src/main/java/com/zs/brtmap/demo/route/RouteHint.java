@@ -6,8 +6,10 @@ import android.widget.TextView;
 
 import com.esri.android.map.GraphicsLayer;
 import com.esri.android.map.Layer;
+import com.esri.core.geometry.Geometry;
 import com.esri.core.geometry.GeometryEngine;
 import com.esri.core.geometry.Point;
+import com.esri.core.geometry.Polygon;
 import com.esri.core.geometry.Polyline;
 import com.esri.core.map.Graphic;
 import com.ty.mapdata.TYLocalPoint;
@@ -90,11 +92,19 @@ public class RouteHint extends BaseMapViewActivity implements TYOfflineRouteMana
 
         TYPoi poi = mapView.extractRoomPoiOnCurrentFloor(mappoint.getX(),mappoint.getY());
         if (poi == null) {
-            Utils.showToast(this, "请选择地图范围内的点");
+            Utils.showToast(this, "请选择地图范围内的区域");
             return;
         }
+        Point centerPt = null;
+        Geometry geom = poi.getGeometry();
+        if (geom instanceof Polygon) {
+            //获取标点
+            centerPt = GeometryEngine.getLabelPointForPolygon((Polygon)geom,mapView.getSpatialReference());
+        }else {
+            centerPt = (Point)geom;
+        }
         startPoint = endPoint;
-        endPoint = new TYLocalPoint(mappoint.getX(), mappoint.getY(), mapView.getCurrentMapInfo().getFloorNumber());
+        endPoint = new TYLocalPoint(centerPt.getX(), centerPt.getY(), mapView.getCurrentMapInfo().getFloorNumber());
         mapView.showRouteStartSymbolOnCurrentFloor(startPoint);
         mapView.showRouteEndSymbolOnCurrentFloor(endPoint);
         if (startPoint != null) {

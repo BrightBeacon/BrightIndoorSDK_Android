@@ -7,8 +7,10 @@ import com.esri.android.map.GraphicsLayer;
 import com.esri.android.map.GroupLayer;
 import com.esri.android.map.Layer;
 import com.esri.core.geometry.Envelope;
+import com.esri.core.geometry.Geometry;
 import com.esri.core.geometry.GeometryEngine;
 import com.esri.core.geometry.Point;
+import com.esri.core.geometry.Polygon;
 import com.esri.core.map.Graphic;
 import com.esri.core.symbol.SimpleFillSymbol;
 import com.ty.mapdata.TYLocalPoint;
@@ -25,6 +27,7 @@ import com.zs.brtmap.demo.R;
 import com.zs.brtmap.demo.utils.Utils;
 
 import android.graphics.Color;
+import android.graphics.Region;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -105,14 +108,22 @@ public class RouteActivity extends BaseMapViewActivity implements TYOfflineRoute
 
 		TYPoi poi = mapView.extractRoomPoiOnCurrentFloor(mappoint.getX(),mappoint.getY());
 		if (poi == null) {
-			Utils.showToast(RouteActivity.this, "请选择地图范围内的点");
+			Utils.showToast(RouteActivity.this, "请选择地图范围内的区域");
 			return;
+		}
+		Point centerPt = null;
+		Geometry geom = poi.getGeometry();
+		if (geom instanceof Polygon) {
+			//获取标点
+			centerPt = GeometryEngine.getLabelPointForPolygon((Polygon)geom,mapView.getSpatialReference());
+		}else {
+			centerPt = (Point)geom;
 		}
 		String title = (poi.getName()!=null)?poi.getName():"未知道路";
 		mapCallout.setStyle(R.xml.callout_style);
-		mapCallout.setMaxWidth(Utils.dip2px(this,300));
-		mapCallout.setMaxHeight(Utils.dip2px(this,300));
-		mapCallout.setContent(loadCalloutView(title, mappoint));
+		mapCallout.setMaxWidthDp(300);
+		mapCallout.setMaxHeightDp(300);
+		mapCallout.setContent(loadCalloutView(title, centerPt));
 		mapCallout.show(mappoint);
 	}
 
@@ -120,6 +131,7 @@ public class RouteActivity extends BaseMapViewActivity implements TYOfflineRoute
 	private View loadCalloutView(final String title, final Point pt) {
 		LayoutInflater inflater = LayoutInflater.from(this);
 		View view = inflater.inflate(R.layout.layout_callout, null);
+
 		TextView titleView = (TextView) view.findViewById(R.id.callout_title);
 		titleView.setText(title);
 		TextView detailView = (TextView) view.findViewById(R.id.callout_detail);
