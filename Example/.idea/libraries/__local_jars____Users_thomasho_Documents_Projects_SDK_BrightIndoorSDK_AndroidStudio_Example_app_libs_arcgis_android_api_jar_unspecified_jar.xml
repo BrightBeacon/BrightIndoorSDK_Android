@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="arcgis-android-api">
+  <library name="__local_jars__:/Users/thomasho/Documents/Projects/室内地图SDK/BrightIndoorSDK_AndroidStudio/Example/app/libs/arcgis-android-api.jar:unspecified@jar">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/app/libs/arcgis-android-api.jar!/" />
     </CLASSES>
