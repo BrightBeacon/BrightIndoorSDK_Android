@@ -38,6 +38,7 @@ public class TileActivity extends Activity {
         //瓦片地图需要矢量地图配合才可以拾取POI信息等，所以可以在矢量楼层切换这里，加载瓦片数据
         if(layerID >0)mapView.removeLayer(mapView.getLayerByID(layerID));
         TYTiledLayer tiledLayer = new TYTiledLayer(tiledManager.tileInfoByFloor("1"));
+        tiledLayer.removeTileCache();
         layerID = mapView.addLayer(tiledLayer);
 
         mapView.setExtent(tiledLayer.getExtent());

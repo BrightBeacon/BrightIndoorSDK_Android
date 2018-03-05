@@ -10,7 +10,7 @@ android {
         versionCode 1
         versionName "1.5.4"
         ndk {
-            // 设置支持的 SO 库构架，一般而言，取你所有的库支持的构架的`交集`。
+            // 设置支持的 SO 库构架，必须取你所有的库支持的构架的`交集`，否则出现某个CPU架构对应so缺失导致闪退。
             abiFilters 'armeabi-v7a'//,'armeabi', 'x86', 'arm64-v8a', 'x86_64', 'mips', 'mips64'
         }
     }

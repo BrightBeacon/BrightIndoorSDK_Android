@@ -121,6 +121,7 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
             TYPictureMarkerSymbol pms  = new TYPictureMarkerSymbol(getResources().getDrawable(R.drawable.location_arrow));
             mapView.setLocationSymbol(pms);
         }
+        mapView.setMapMode(TYMapView.TYMapViewMode.TYMapViewModeFollowing);
     }
 
     @Override
@@ -187,9 +188,9 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
         //如方位有误，尝试打开手机校准指南针或提醒用户直接转8字。
         // 设备方向改变事件回调。结合地图MapMode可以处理地图自动旋转，或箭头方向功能。
         //mapView.setMapMode(TYMapViewMode.TYMapViewModeDefault);
-//		mapView.setMapMode(TYMapView.TYMapViewMode.TYMapViewModeFollowing);
         Log.i(TAG, "地图初始北偏角：" + mapView.building.getInitAngle() + "；当前设备北偏角：" + newHeading);
         mapView.processDeviceRotation(newHeading);
+
     }
 
     @Override

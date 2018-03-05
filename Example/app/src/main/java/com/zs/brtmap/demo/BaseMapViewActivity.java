@@ -77,15 +77,16 @@ public abstract class BaseMapViewActivity extends Activity
         //添加地图回调
         mapView.addMapListener(this);
 
-        //初始化建筑数据，授权appKey
-        mapView.init(Constants.BUILDING_ID, Constants.APP_KEY);
 
         //请求定位相关权限
         checkPermission();
     }
 
     private void onPermissionGranted() {
-        //开始定位等操作
+        //开始下载地图、定位等操作
+
+        //初始化建筑数据，授权appKey
+        mapView.init(Constants.BUILDING_ID, Constants.APP_KEY);
     }
 
     // 仅用于本例子类设置界面元素
@@ -251,16 +252,20 @@ public abstract class BaseMapViewActivity extends Activity
                 //第一次请求权限的时候返回false,第二次shouldShowRequestPermissionRationale返回true
                 //如果用户选择了“不再提醒”永远返回false。
                 if (shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_COARSE_LOCATION)){
-                    Toast.makeText(this, "需要开启蓝牙定位权限，才能进行室内定位导航", Toast.LENGTH_LONG).show();
-                    // 申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义）
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE}, BLE_LOCATION_STATE);
+                    Toast.makeText(this, "开启存储、蓝牙定位权限，才能显示进行室内地图、定位导航", Toast.LENGTH_LONG).show();
                 }else{
-                    Toast.makeText(getApplicationContext(), "无法请求权限,请手动前往设置开启蓝牙定位权限", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "请开启存储、蓝牙定位权限才能实现室内地图导航", Toast.LENGTH_SHORT).show();
                 }
+                // 申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义）
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE}, BLE_LOCATION_STATE);
+
             } else {
                 //已有权限
                 onPermissionGranted();
             }
+        } else {
+            //不需要权限
+            onPermissionGranted();
         }
     }
     //Android6.0申请权限的回调方法
