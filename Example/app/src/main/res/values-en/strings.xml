@@ -22,7 +22,9 @@
     <string name="title_activity_location_snap">Location Snap</string>
     <string name="title_activity_location_demo">Navigation</string>
     <string name="title_activity_route_only">RouteOnly</string>
-    <string name="title_activity_route_forbidden">RouteForbidden</string><string name="S00210109F0120001">Desktop</string>
+    <string name="title_activity_route_forbidden">RouteForbidden</string>
+
+    <string name="S00210109F0120001">Desktop</string>
     <string name="S00210109F0120002">Desktop</string>
     <string name="S00210109F0120003">Desktop</string>
     <string name="S00210109F0120004">Desktop</string>
@@ -37,4 +39,10 @@
     <string name="S00210109F0120013">Desktop</string>
     <string name="S00210109F0120014">Desktop</string>
     <string name="S00210109F0120015">Desktop</string>
+    <string name="S00210109F0120016">Desktop</string>
+    <string name="S00210109F0120017">Desktop</string>
+    <string name="S00210109F0120018">Desktop</string>
+    <string name="S00210109F0120019">Desktop</string>
+    <string name="S00210109F0120020">Desktop</string>
+    <string name="S00210109F0120021">Desktop</string>
 </resources>
