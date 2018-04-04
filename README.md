@@ -6,26 +6,13 @@ Eclipse版Demo->[室内开发包Eclipse](https://github.com/BrightBeacon/BrightI
 
 ### 一、简介
 室内定位开发包是基于GIS框架和GEOS几何计算开源库，为开发者提供了的室内地图显示、路径规划、室内定位等相关GIS功能。**本开发包支持的Android版本为18或更高，库架构支持'armeabi', 'armeabi-v7a', 'x86'** 
-### 二、准备工作 
+### 二、项目集成
 下载本资源，目录结构：
 <br />Example/ 示例工程
 <br />Documents/ API文档
 <br />SDKs/ jar、so库和图标资源
-#### 2.1. 新建android工程，将SDKs/*.jar包和动态库so复制到项目的libs文件夹中,AndroidStudio需要在build.gradle中指定so库的位置信息,如下： 
-```
-android { 
-	sourceSets {
-        main {
-            jniLibs.srcDir(['libs'])
-        }
-    } 
-} 
-```
-#### 2.2.复制SDKs/drawable-hdpi地图设施图标到工程res下的drawable-hdpi文件夹 
+#### 参见[详细集成文档](快速集成.md)
 
-```
-资源图片在SDKs/drawable-hdpi
-```
 ### 三、基础地图展示 
 #### 3.1.配置AndroidManifest.xml所需权限
 

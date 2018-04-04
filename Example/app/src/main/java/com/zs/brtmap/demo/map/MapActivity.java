@@ -41,6 +41,7 @@ public class MapActivity extends BaseMapViewActivity {
 		//根据x,y获取本层房间POI
 		TYPoi poi = mapView.extractRoomPoiOnCurrentFloor(mappoint.getX(),
 				mappoint.getY());
+
 		if (poi != null) {
 			mapView.highlightPoi(poi);
 		}

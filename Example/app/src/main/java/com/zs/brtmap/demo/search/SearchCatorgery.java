@@ -97,4 +97,5 @@ public class SearchCatorgery extends BaseMapViewActivity {
         symbol.setOffsetY(10);
         return symbol;
     }
+
 }

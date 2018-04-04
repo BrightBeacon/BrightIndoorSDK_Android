@@ -199,6 +199,7 @@ public class RouteHint extends BaseMapViewActivity implements TYOfflineRouteMana
             List<TYDirectionalHint> hints = routeResult.getRouteDirectionalHint(part);
             TYDirectionalHint hint = routeResult.getDirectionalHintForLocationFromHints(lp, hints);
             if (hint != null) {
+                mapView.showRouteHint(hint,true);
                 textHint.setText("方向：" + hint.getDirectionString() + hint.getRelativeDirection()
                         + "\n本段长度：" + String.format("%.2f", hint.getLength())
                         + "\n本段角度：" + String.format("%.2f", hint.getCurrentAngle())
