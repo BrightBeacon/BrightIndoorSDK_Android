@@ -56,7 +56,7 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
 
         //按需控制定位设备个数
         locationManager.setLimitBeaconNumber(true);
-        locationManager.setMaxBeaconNumberForProcessing(5);
+        locationManager.setMaxBeaconNumberForProcessing(3);
 
         //控制所有信号很弱<-80,定位失败
         locationManager.setRssiThreshold(-80);
