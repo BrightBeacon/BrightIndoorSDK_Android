@@ -39,10 +39,10 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/TYMapData.jar')
     compile files('libs/TYTileSDK-2.0.0.jar')
-    compile files('libs/TYMapSDK-2.2.8.jar')
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile files('libs/TYBLELocationEngine-2.0.7.jar')
+    compile files('libs/TYMapSDK-2.2.9.jar')
 }
