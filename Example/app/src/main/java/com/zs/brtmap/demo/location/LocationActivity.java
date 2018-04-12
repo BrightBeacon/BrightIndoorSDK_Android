@@ -57,6 +57,7 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
         //按需控制定位设备个数
         locationManager.setLimitBeaconNumber(true);
         locationManager.setMaxBeaconNumberForProcessing(3);
+        
 
         //控制所有信号很弱<-80,定位失败
         locationManager.setRssiThreshold(-80);
@@ -195,20 +196,23 @@ public class LocationActivity extends BaseMapViewActivity implements TYLocationM
 
     @Override
     public void didUpdateImmediateLocation(TYLocationManager arg0, TYLocalPoint newLocalPoint) {
-        //  *  位置更新事件回调，位置更新并返回新的位置结果。
+        /*  位置更新事件回调，位置更新并返回新的位置结果。
         // 与[TYLocationManager:didUpdateLocatin:]方法相近，此方法回调结果未融合手机传感器信息，灵敏度较高，适合用于行车场景下或传感器无效场景
         if (newLocalPoint.getFloor() != mapView.currentMapInfo.getFloorNumber()) {
             mapView.setFloor(TYMapInfo.searchMapInfoFromArray(mapView.allMapInfo(), newLocalPoint.getFloor()));
             return;
         }
-//        if (picIndex == 0) animateLocationSymbol();
-        mapView.showLocation(newLocalPoint);
+        mapView.showLocation(newLocalPoint);*/
     }
     @Override
     public void didUpdateLocation(TYLocationManager arg0, TYLocalPoint newLocalPoint) {
         //  位置更新事件回调，位置更新并返回新的位置结果。
         //  与[TYLocationManager:didUpdateImmediationLocation:]方法相近，此方法回调结果融合手机设备传感器信息，稳定性较好，适合用于步行场景下
-        //mapView.showLocation(newLocalPoint);
+        if (newLocalPoint.getFloor() != mapView.currentMapInfo.getFloorNumber()) {
+            mapView.setFloor(TYMapInfo.searchMapInfoFromArray(mapView.allMapInfo(), newLocalPoint.getFloor()));
+            return;
+        }
+        mapView.showLocation(newLocalPoint);
     }
 
 

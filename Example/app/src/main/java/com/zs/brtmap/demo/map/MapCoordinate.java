@@ -28,10 +28,14 @@ public class MapCoordinate extends BaseMapViewActivity {
         Point screenPoint = mapView.toScreenPoint(mappoint);
         Point mapPoint = mapView.toMapPoint(screenPoint);
 
-        text_coord.setText("屏幕坐标：x:"+ String.format("%.2f",screenPoint.getX())
+        text_coord.setText("屏幕坐标：x:"+
+                String.format("%.2f",screenPoint.getX())
                 +",y:"+String.format("%.2f",screenPoint.getY())
                 +"\n地图坐标：x:"+String.format("%.2f",mapPoint.getX())
-                +",y:"+String.format("%.2f",mapPoint.getY()));
+                +",y:"+String.format("%.2f",mapPoint.getY())
+                + "\n转换右下角0,0坐标:x:" + String.format("%.2f",mapPoint.getX() - mapView.currentMapInfo.getMapExtent().getXmin())
+                +",y:"+String.format("%.2f",mapPoint.getY() - mapView.currentMapInfo.getMapExtent().getYmin())
+        );
     }
 
     static {

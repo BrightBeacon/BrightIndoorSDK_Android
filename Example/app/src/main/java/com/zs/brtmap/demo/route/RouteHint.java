@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.esri.android.map.GraphicsLayer;
-import com.esri.android.map.Layer;
 import com.esri.core.geometry.Geometry;
 import com.esri.core.geometry.GeometryEngine;
 import com.esri.core.geometry.Point;
@@ -39,8 +38,7 @@ public class RouteHint extends BaseMapViewActivity implements TYOfflineRouteMana
     GraphicsLayer hintLayer;
     int graphicID;
     int pointIndex;
-
-    boolean isMoniLocation;
+    List<TYDirectionalHint> hintsOfPart;
 
     TYRouteResult routeResult;
     TYLocalPoint startPoint, endPoint;
@@ -61,7 +59,7 @@ public class RouteHint extends BaseMapViewActivity implements TYOfflineRouteMana
                     mapView.setFloor(startPoint.getFloor()+"");
                     mapView.setScale(mapView.getXScaleFactor(3),true);
                     mapView.centerAt(new Point(startPoint.getX(),startPoint.getY()),false);
-                    showHints(startPoint);
+                    showHintForLocation(startPoint);
                 } else {
                     Utils.showToast(RouteHint.this, "请选择起点、终点");
                 }
@@ -137,8 +135,12 @@ public class RouteHint extends BaseMapViewActivity implements TYOfflineRouteMana
             mapView.showRouteResultOnCurrentFloor();
     }
 
-
-    private void showHints(TYLocalPoint lp) {
+    /**
+     *  显示模拟定位点，并开始路段提示
+     *
+     * @param lp
+     */
+    private void showHintForLocation(TYLocalPoint lp) {
 
         //新建、更新指示图标位置
         if (graphicID != 0) {
@@ -181,25 +183,31 @@ public class RouteHint extends BaseMapViewActivity implements TYOfflineRouteMana
                 }
             }
         }
-        TYLocalPoint localPoint = new TYLocalPoint(pt.getX(), pt.getY(), floor);
-        animateUpdateGraphic(0, lp, localPoint);
+        TYLocalPoint toPoint = new TYLocalPoint(pt.getX(), pt.getY(), floor);
+        animateUpdateGraphic(0, lp,toPoint);
 
-
-        List<TYDirectionalHint> hints = routeResult.getRouteDirectionalHint(part);
-        TYDirectionalHint hint = routeResult.getDirectionalHintForLocationFromHints(localPoint, hints);
+        //提取1米，15度以上的提示。
+        hintsOfPart = routeResult.getRouteDirectionalHint(part,1,15);
+        TYDirectionalHint hint = routeResult.getDirectionalHintForLocationFromHints(toPoint, hintsOfPart);
         if (hint != null) {
-            mapView.setRotationAngle(hint.getCurrentAngle(), true);
             mapView.showRouteHint(hint, false);
+            //角度仅演示 模拟用，正常请使用定位方位回调
+            mapView.setRotationAngle(hint.getCurrentAngle());
         }
+        showText(lp);
     }
 
-    private void showCurrentHint(TYLocalPoint lp) {
-        TYRoutePart part = routeResult.getNearestRoutePart(lp);
-        if (part != null) {
-            List<TYDirectionalHint> hints = routeResult.getRouteDirectionalHint(part);
-            TYDirectionalHint hint = routeResult.getDirectionalHintForLocationFromHints(lp, hints);
+
+    /**
+     *
+     *  根据当前点，显示最近的路径提示
+     *
+     * @param lp 当前点
+     */
+    private void showText(TYLocalPoint lp) {
+        if (hintsOfPart != null) {
+            TYDirectionalHint hint = routeResult.getDirectionalHintForLocationFromHints(lp, hintsOfPart);
             if (hint != null) {
-                mapView.showRouteHint(hint,true);
                 textHint.setText("方向：" + hint.getDirectionString() + hint.getRelativeDirection()
                         + "\n本段长度：" + String.format("%.2f", hint.getLength())
                         + "\n本段角度：" + String.format("%.2f", hint.getCurrentAngle())
@@ -210,24 +218,32 @@ public class RouteHint extends BaseMapViewActivity implements TYOfflineRouteMana
     }
 
 
-    private void animateUpdateGraphic(final double offset, final TYLocalPoint lp1, final TYLocalPoint lp2) {
+    /**
+     *
+     * 将from点按0.1米/10ms移动到to点
+     *
+     * @param offsetOfDistance 累积移动距离
+     * @param from 起点
+     * @param to 到点
+     */
+    private void animateUpdateGraphic(final double offsetOfDistance, final TYLocalPoint from, final TYLocalPoint to) {
         mapView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                double distance = lp1.distanceWithPoint(lp2);
-                if (distance > 0 && offset<distance) {
-                    Point tmp = getPointWithLengthAndOffset(lp1, lp2, offset / distance);
+                double distance = from.distanceWithPoint(to);
+                if (distance > 0 && offsetOfDistance < distance) {
+                    Point tmp = getPointWithLengthAndOffset(from, to, offsetOfDistance / distance);
                     mapView.centerAt(tmp,false);
-                    showCurrentHint(new TYLocalPoint(tmp.getX(), tmp.getY(), lp1.getFloor()));
+                    showText(new TYLocalPoint(tmp.getX(), tmp.getY(), from.getFloor()));
                     hintLayer.updateGraphic(graphicID, tmp);
-                    animateUpdateGraphic(offset + 0.1, lp1, lp2);
+                    animateUpdateGraphic(offsetOfDistance + 0.1, from, to);
                 }else {
-                    showCurrentHint(lp2);
-                    showHints(lp2);
+                    showText(to);
+                    showHintForLocation(to);
                 }
 
             }
-        }, 10);
+        }, 0);
     }
 
     private Point getPointWithLengthAndOffset(TYLocalPoint start, TYLocalPoint end,double per) {
